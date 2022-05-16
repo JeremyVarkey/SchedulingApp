@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login">
    <children>
       <Button fx:id="loginButton" layoutX="14.0" layoutY="199.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="113.0" text="Login" />
       <Button fx:id="exitButton" layoutX="161.0" layoutY="199.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="113.0" text="Exit" />
