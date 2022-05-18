@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenu">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="780.0">
+         <children>
+            <TableView layoutX="16.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Customer ID" />
+                  <TableColumn prefWidth="121.0" text="Customer Name" />
+                  <TableColumn prefWidth="78.0" text="Address" />
+                  <TableColumn prefWidth="71.0" text="Postal Code" />
+                  <TableColumn prefWidth="66.0" text="Phone" />
+                  <TableColumn prefWidth="78.0" text="Create Date" />
+                  <TableColumn prefWidth="82.0" text="Create By" />
+                  <TableColumn prefWidth="76.0" text="Last Update" />
+                  <TableColumn prefWidth="104.0" text="State/Province" />
+               </columns>
+            </TableView>
+            <Button layoutX="16.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Reports" />
+            <Button layoutX="676.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Logout" />
+            <Button layoutX="452.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Delete Customer" />
+            <Button layoutX="335.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="94.0" text="Edit Customer" />
+            <Button layoutX="200.0" layoutY="57.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="94.0" text="Add Customer" />
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer List" />
+            <RadioButton layoutX="200.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="View Customers">
+               <toggleGroup>
+                  <ToggleGroup fx:id="TimeFrame" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="337.0" layoutY="14.0" mnemonicParsing="false" text="Weekly View" toggleGroup="$TimeFrame" />
+            <RadioButton layoutX="452.0" layoutY="14.0" mnemonicParsing="false" text="Monthly View" toggleGroup="$TimeFrame" />
+            <RadioButton layoutX="589.0" layoutY="14.0" mnemonicParsing="false" text="All Appointments" toggleGroup="$TimeFrame" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
