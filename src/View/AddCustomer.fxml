@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddCustomer">
    <children>
-      <Button layoutX="52.0" layoutY="344.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" text="Add" />
+      <Button layoutX="52.0" layoutY="344.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" text="Save" />
       <Button layoutX="316.0" layoutY="344.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" text="Cancel" />
       <TextField id="CustomerID" editable="false" layoutX="167.0" layoutY="40.0" />
       <TextField id="CustomerName" layoutX="167.0" layoutY="82.0" />
