@@ -28,7 +28,7 @@ public class Main extends Application {
         JDBC.makeConnection();
         LoginHelper.insertUser("jeremy", "Sonicteam4",
                 "jeremy", "jeremy");
-
+        LoginHelper.updateUser(3, "jon");
         launch(args);
         JDBC.closeConnection();
     }
