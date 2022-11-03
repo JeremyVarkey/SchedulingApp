@@ -8,9 +8,9 @@ public class GeneralHelper {
      * Helper function to create adjustable error message.
      * @param message String of desired error message
      */
-    public static void createErrorMessage(String message) {
+    public static void createErrorMessage(String message, String title) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Error!");
+        errorAlert.setHeaderText(title);
         errorAlert.setContentText(message);
         errorAlert.showAndWait();
     }
