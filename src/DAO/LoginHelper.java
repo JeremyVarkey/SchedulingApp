@@ -99,8 +99,11 @@ public abstract class LoginHelper {
             int user_ID = rs.getInt("User_ID");
             String userName = rs.getString("User_Name");
             String password = rs.getString("Password");
-            System.out.println(user_ID + " | " + userName + " | " + password);
+            Timestamp datetime = rs.getTimestamp("Create_Date");
+            System.out.println(user_ID + " | " + userName + " | " + password + " | " + datetime);
+            GeneralHelper.ESTtoUTC(datetime.toLocalDateTime());
         }
+
     }
 
     /**

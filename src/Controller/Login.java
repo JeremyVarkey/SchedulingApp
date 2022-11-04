@@ -20,9 +20,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.io.*;
 
+
+/**
+ * Login screen controller.
+ */
 public class Login implements Initializable {
 
     Stage stage;
@@ -39,29 +45,51 @@ public class Login implements Initializable {
     @FXML private Text PasswordText;
     @FXML private Text UsernameText;
 
+    /**
+     * Exit program when user hits the Exit button
+     * @param event
+     */
     @FXML
     void ExitProgram(ActionEvent event) {
         JDBC.closeConnection();
         System.exit(0);
     }
 
+    /**
+     * Action upon user hitting Login button. If an approved user, move to Main Screen. Also logs user logins attempts.
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     void LoginToProgram(ActionEvent event) throws IOException, SQLException {
+        FileWriter file = new FileWriter("login_log.txt", true);
+        PrintWriter pw = new PrintWriter(file);
+
         String user = username.getText();
         String pass = password.getText();
         ResourceBundle resource = ResourceBundle.getBundle("Controller/Nat", Locale.getDefault());
 
         if (LoginHelper.getUserPasswordMatch(user, pass)) {
+            pw.println(user + " successfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
             stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
             stage.setScene(new Scene(scene));
             stage.setTitle("Main Menu");
             stage.show();
         } else {
+            pw.println(user + " unsuccessfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
+            System.out.println(user + " unsuccessfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
             GeneralHelper.createErrorMessage(resource.getString("loginError"), resource.getString("error"));
         }
+        pw.close();
     }
 
+    /**
+     * Initialize the login screen so that words are based off of user location
+     * @param url
+     * @param resource
+     */
     @Override
     public void initialize(URL url, ResourceBundle resource) {
         Locale locale = Locale.getDefault();
@@ -78,8 +106,6 @@ public class Login implements Initializable {
         LocationText.setText(resource.getString("location"));
         language.setText(resource.getString("languageSpoken"));
         timezone.setText(location.toString());
-
-
     }
 
 }

@@ -25,8 +25,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("fr"));
+        //Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();
+        LoginHelper.printUsers();
         launch(args);
         JDBC.closeConnection();
     }
