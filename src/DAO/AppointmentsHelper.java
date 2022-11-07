@@ -9,8 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Helper class for Appointments table in database
+ */
 public class AppointmentsHelper {
 
+    /**
+     * Get all appointments from appointments table in database. Returns ObservableList of Appointment objects
+     * @return ObservableList
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments";
@@ -37,6 +45,12 @@ public class AppointmentsHelper {
         return appointments;
     }
 
+    /**
+     * Deletes appointment of specific Appointment ID from appointments table in database.
+     * @param aptID
+     * @return int rows affected
+     * @throws SQLException
+     */
     public static int deleteAppointment(int aptID) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

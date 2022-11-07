@@ -61,6 +61,7 @@ public class Login implements Initializable {
 
     /**
      * Action upon user hitting Login button. If an approved user, move to Main Screen. Also logs user logins attempts.
+     * Also notifies user if there is an appointment within 15 minutes.
      * @param event
      * @throws IOException
      * @throws SQLException
