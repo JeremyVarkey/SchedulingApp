@@ -79,7 +79,6 @@ public class Login implements Initializable {
             stage.show();
         } else {
             pw.println(user + " unsuccessfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
-            System.out.println(user + " unsuccessfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
             GeneralHelper.createErrorMessage(resource.getString("loginError"), resource.getString("error"));
         }
         pw.close();

@@ -1,14 +1,19 @@
 package sample;
 import Controller.Login;
+import DAO.AppointmentsHelper;
 import DAO.LoginHelper;
+import Model.Appointment;
 import Model.JDBC;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 
@@ -29,5 +34,7 @@ public class Main extends Application {
         JDBC.makeConnection();
         launch(args);
         JDBC.closeConnection();
+
+
     }
 }
