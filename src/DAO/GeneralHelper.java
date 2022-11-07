@@ -44,14 +44,9 @@ public class GeneralHelper {
      * @return LocalDateTime UTC
      */
     public static LocalDateTime ESTtoUTC(LocalDateTime ldt) {
-        System.out.println("Local Date Time EST" + ldt.toString());
         ZonedDateTime zdtLocal = ldt.atZone(ZoneId.of("US/Eastern"));
-        System.out.println("Zoned Date Time EST" + zdtLocal.toString());
         ZonedDateTime zdtUTC = zdtLocal.withZoneSameInstant(ZoneId.of("UTC"));
-        System.out.println("Zoned Date Time UTC" + zdtUTC.toString());
         LocalDateTime ldtUTC = zdtUTC.toLocalDateTime();
-        System.out.println("Local Date Time UTC" + ldtUTC.toString());
-        System.out.println(ldtUTC.format(format()));
         return ldtUTC;
     }
 
@@ -76,7 +71,30 @@ public class GeneralHelper {
         ZonedDateTime zdtUTC = ldt.atZone(ZoneId.of("UTC"));
         ZonedDateTime zdtEST = zdtUTC.withZoneSameInstant(ZoneId.of("US/Eastern"));
         LocalDateTime ldtEST = zdtEST.toLocalDateTime();
-        System.out.println(ldtEST.format(format()));
         return ldtEST;
+    }
+
+    /**
+     * Converts LocalDateTime object from EST time to Local time
+     * @param ldt LocalDateTime EST
+     * @return LocalDateTime Local
+     */
+    public static LocalDateTime ESTtoLocal(LocalDateTime ldt) {
+        ZonedDateTime zdtEST = ldt.atZone(ZoneId.of("US/Eastern"));
+        ZonedDateTime zdtLocal = zdtEST.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime ldtLocal = zdtLocal.toLocalDateTime();
+        return ldtLocal;
+    }
+
+    /**
+     * Converts LocalDateTime object from UTC to Local time
+     * @param ldt LocalDateTime UTC
+     * @return LocalDateTime Local
+     */
+    public static LocalDateTime UTCtoLocal(LocalDateTime ldt) {
+        ZonedDateTime zdtUTC = ldt.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zdtLocal = zdtUTC.withZoneSameInstant(ZoneId.systemDefault());
+        LocalDateTime ldtLocal = zdtLocal.toLocalDateTime();
+        return ldtLocal;
     }
 }
