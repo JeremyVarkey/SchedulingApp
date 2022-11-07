@@ -1,15 +1,18 @@
 package Controller;
 
+import DAO.AppointmentsHelper;
 import DAO.GeneralHelper;
 import DAO.LoginHelper;
 import Model.JDBC;
 import com.mysql.cj.log.Log;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -19,12 +22,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.io.*;
-
+import Model.Appointment;
 
 /**
  * Login screen controller.
@@ -77,6 +81,26 @@ public class Login implements Initializable {
             stage.setScene(new Scene(scene));
             stage.setTitle("Main Menu");
             stage.show();
+
+            ObservableList<Appointment> appointments = AppointmentsHelper.getAllAppointments();
+            Boolean aptWithin15Min = false;
+            LocalDateTime nowPlus15 = LocalDateTime.now().plusMinutes(15);
+            LocalDateTime nowMinus15 = LocalDateTime.now().minusMinutes(15);
+            for (Appointment apt:appointments) {
+                LocalDateTime aptLocalStart = GeneralHelper.UTCtoLocal(apt.getStart());
+                if ((aptLocalStart.isBefore(nowPlus15) || aptLocalStart.isEqual(nowPlus15)) &&
+                        (aptLocalStart.isAfter(nowMinus15) || aptLocalStart.isEqual(nowMinus15))) {
+                    aptWithin15Min = true;
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Appointment ID #" + apt.getAptID()
+                            + " is within 15 minutes, at " + apt.getStart().format(GeneralHelper.format()));
+                    alert.showAndWait();
+                }
+            }
+            if (aptWithin15Min == false) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No appointments within 15 minutes.");
+                alert.showAndWait();
+            }
+
         } else {
             pw.println(user + " unsuccessfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
             GeneralHelper.createErrorMessage(resource.getString("loginError"), resource.getString("error"));

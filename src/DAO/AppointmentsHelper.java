@@ -37,7 +37,18 @@ public class AppointmentsHelper {
         return appointments;
     }
 
-
+    public static int deleteAppointment(int aptID) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, aptID);
+        try {
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (Exception e) {
+            System.out.println("Delete failed! Please try again.");
+            return 0;
+        }
+    }
 
 
 }
