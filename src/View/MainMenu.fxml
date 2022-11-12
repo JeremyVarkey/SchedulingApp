@@ -30,13 +30,13 @@
       <Button layoutX="337.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Edit Appt" />
       <Button layoutX="200.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Add Appt" />
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Schedule" />
-      <RadioButton layoutX="200.0" layoutY="14.0" mnemonicParsing="false" text="View Customers">
+      <RadioButton fx:id="ViewCustomersButton" layoutX="200.0" layoutY="14.0" mnemonicParsing="false" onAction="#ViewCustomersButtonClick" text="View Customers">
          <toggleGroup>
             <ToggleGroup fx:id="TimeFrame" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="337.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="Weekly View" toggleGroup="$TimeFrame" />
-      <RadioButton layoutX="452.0" layoutY="14.0" mnemonicParsing="false" text="Monthly View" toggleGroup="$TimeFrame" />
-      <RadioButton layoutX="589.0" layoutY="14.0" mnemonicParsing="false" text="All Appointments" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="WeeklyViewButton" layoutX="337.0" layoutY="14.0" mnemonicParsing="false" text="Weekly View" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="MonthlyViewButton" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" text="Monthly View" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="AllAppointmentsButton" layoutX="589.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="All Appointments" toggleGroup="$TimeFrame" />
       <DatePicker layoutX="582.0" layoutY="35.0" />
    </children>
 </AnchorPane>
