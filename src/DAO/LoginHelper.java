@@ -103,7 +103,6 @@ public abstract class LoginHelper {
             System.out.println(user_ID + " | " + userName + " | " + password + " | " + datetime);
             GeneralHelper.ESTtoUTC(datetime.toLocalDateTime());
         }
-
     }
 
     /**
@@ -122,7 +121,7 @@ public abstract class LoginHelper {
             rs.next();
             return rs.getString("Password").equals(password);
         } catch (SQLException e) {
-            System.out.println("Please input a username!");
+            System.out.println("Please input a username or password!");
             return false;
         }
     }
