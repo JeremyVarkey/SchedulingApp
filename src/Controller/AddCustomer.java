@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.CustomerHelper;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class AddCustomer implements Initializable {
 
     @FXML private TextField Address;
     @FXML private Button Cancel;
-    @FXML private ChoiceBox<?> CountrySelection;
+    @FXML private ChoiceBox<String> CountrySelection;
     @FXML private TextField CustomerID;
     @FXML private TextField CustomerName;
     @FXML private TextField PhoneNumber;
@@ -38,8 +39,14 @@ public class AddCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             CountrySelection.getItems().addAll(CustomerHelper.getCountries());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public void setSecondDivision() throws SQLException {
+        String country = CountrySelection.getValue();
+        System.out.println(CustomerHelper.getCountryID(country));
     }
 }

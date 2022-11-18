@@ -25,4 +25,18 @@ public class CustomerHelper {
         return ls;
     }
 
+    public static int getCountryID(String country) throws SQLException {
+        String sql = "SELECT Country_ID FROM countries WHERE Country = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, country);
+        ResultSet rs = ps.executeQuery();
+        try {
+            rs.next();
+            return rs.getInt("Country_ID");
+        } catch (SQLException e) {
+            GeneralHelper.createErrorMessage("No selection returned!", "Error!");
+            return -1;
+        }
+    }
+
 }

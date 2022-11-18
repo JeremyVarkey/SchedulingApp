@@ -7,7 +7,7 @@ import java.time.*;
 /**
  * Helper class for interacting with Users table from database.
  */
-public abstract class LoginHelper {
+public class LoginHelper {
 
     /**
      * Helper function to insert new User into User table.
