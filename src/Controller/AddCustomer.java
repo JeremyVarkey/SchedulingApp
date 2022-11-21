@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddCustomer implements Initializable {
@@ -23,7 +25,7 @@ public class AddCustomer implements Initializable {
     @FXML private TextField PhoneNumber;
     @FXML private TextField PostalCode;
     @FXML private Button Save;
-    @FXML private ChoiceBox<?> StateSelection;
+    @FXML private ChoiceBox<String> StateSelection;
 
     @FXML
     void CancelButtonClick(ActionEvent event) {
@@ -39,14 +41,27 @@ public class AddCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             CountrySelection.getItems().addAll(CustomerHelper.getCountries());
-
+            CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
+                if (newvalue == null) {
+                    StateSelection.getItems().clear();
+                    StateSelection.setDisable(true);
+                } else {
+                    try {
+                        LinkedList<String> states = setSecondDivision();
+                        StateSelection.getItems().setAll(states);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setSecondDivision() throws SQLException {
+    public LinkedList<String> setSecondDivision() throws SQLException {
         String country = CountrySelection.getValue();
-        System.out.println(CustomerHelper.getCountryID(country));
+        int Cid = CustomerHelper.getCountryID(country);
+        return CustomerHelper.getSecondDivision(Cid);
     }
 }

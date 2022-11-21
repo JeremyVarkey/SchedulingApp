@@ -34,9 +34,23 @@ public class CustomerHelper {
             rs.next();
             return rs.getInt("Country_ID");
         } catch (SQLException e) {
-            GeneralHelper.createErrorMessage("No selection returned!", "Error!");
             return -1;
         }
     }
 
+    public static LinkedList getSecondDivision(int countryID) throws SQLException {
+        String sql = "SELECT Division FROM first_level_divisions WHERE Country_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, countryID);
+        ResultSet rs = ps.executeQuery();
+        LinkedList<String> states = new LinkedList<>();
+        try {
+            while(rs.next()){
+                states.add(rs.getString("Division"));
+            }
+        } catch (SQLException e) {
+            GeneralHelper.createErrorMessage("No selection returned!", "Error!");
+        }
+        return states;
+    }
 }
