@@ -25,6 +25,12 @@ public class CustomerHelper {
         return ls;
     }
 
+    /**
+     * Get Country ID based on inputted Country String.
+     * @param country String
+     * @return Country ID
+     * @throws SQLException
+     */
     public static int getCountryID(String country) throws SQLException {
         String sql = "SELECT Country_ID FROM countries WHERE Country = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -38,6 +44,12 @@ public class CustomerHelper {
         }
     }
 
+    /**
+     * Get List of Second Division information based on inputted Country ID.
+     * @param countryID int
+     * @return LinkedList of Second Division items.
+     * @throws SQLException
+     */
     public static LinkedList getSecondDivision(int countryID) throws SQLException {
         String sql = "SELECT Division FROM first_level_divisions WHERE Country_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

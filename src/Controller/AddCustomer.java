@@ -37,6 +37,11 @@ public class AddCustomer implements Initializable {
 
     }
 
+    /**
+     * Initialize method. Sets choicebox values based on user input.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -59,6 +64,11 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**
+     * Getter method to find Country ID of Country Choice Box, and find corresponding list of Second Division items.
+     * @return LinkedList of Second Division items
+     * @throws SQLException
+     */
     public LinkedList<String> setSecondDivision() throws SQLException {
         String country = CountrySelection.getValue();
         int Cid = CustomerHelper.getCountryID(country);
