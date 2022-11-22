@@ -37,6 +37,7 @@ public class Login implements Initializable {
 
     Stage stage;
     Parent scene;
+    public static String loggedUser;
 
     @FXML private Button exitButton;
     @FXML private TextField language;
@@ -76,6 +77,7 @@ public class Login implements Initializable {
         ResourceBundle resource = ResourceBundle.getBundle("Controller/Nat", Locale.getDefault());
 
         if (LoginHelper.getUserPasswordMatch(user, pass)) {
+            loggedUser = user;
             pw.println(user + " successfully logged in at " + ZonedDateTime.now(ZoneId.of("UTC")));
             stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));

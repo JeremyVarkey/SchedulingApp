@@ -1,14 +1,21 @@
 package Controller;
 
 import DAO.CustomerHelper;
+import DAO.GeneralHelper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -16,6 +23,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddCustomer implements Initializable {
+
+    Stage stage;
+    Scene scene;
+    Parent root;
 
     @FXML private TextField Address;
     @FXML private Button Cancel;
@@ -33,8 +44,22 @@ public class AddCustomer implements Initializable {
     }
 
     @FXML
-    void SaveButtonClick(ActionEvent event) {
+    void SaveButtonClick(ActionEvent event) throws SQLException, IOException {
+        String name = CustomerName.getText();
+        String address = Address.getText();
+        String postal = PostalCode.getText();
+        String phone = PhoneNumber.getText();
+        String user = Login.loggedUser;
+        int divisionId = CustomerHelper.getSecondDivisionID(StateSelection.getValue());
 
+        CustomerHelper.insertNewCustomer(name, address, postal, phone, user, divisionId);
+        GeneralHelper.createInformMessage("Successfully added new Customer!", "Success!");
+
+        root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
+        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**

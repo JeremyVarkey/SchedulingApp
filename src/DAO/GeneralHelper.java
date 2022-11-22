@@ -19,6 +19,17 @@ public class GeneralHelper {
     }
 
     /**
+     * Helper function to create adjustable inform message.
+     * @param message String of desired error message
+     */
+    public static void createInformMessage(String message, String title) {
+        Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+        errorAlert.setHeaderText(title);
+        errorAlert.setContentText(message);
+        errorAlert.showAndWait();
+    }
+
+    /**
      * returns standard format for inputting into DB
      * @return DateTimeFormatter
      */
