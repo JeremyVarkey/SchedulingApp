@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDateTime;
+
 /**
  * Class to hold Customer data. This class includes getters and setters for id, customer name, address,
  * postal code, phone, division id, and division name
@@ -8,10 +10,12 @@ public class Customer {
     private int id;
     private String customerName;
     private String address;
-    private int postalCode;
+    private String postalCode;
     private String phone;
     private int divisionID;
     private String divisionName;
+    private String createdBy;
+    private LocalDateTime lastUpdate;
 
     /**
      * Constructor for Customer object.
@@ -23,7 +27,7 @@ public class Customer {
      * @param divisionID
      * @param divisionName
      */
-    public Customer(int id, String customerName, String address, int postalCode, String phone, int divisionID, String divisionName) {
+    public Customer(int id, String customerName, String address, String postalCode, String phone, int divisionID, String divisionName, String createdBy, LocalDateTime lastUpdate) {
         this.id = id;
         this.customerName = customerName;
         this.address = address;
@@ -31,6 +35,8 @@ public class Customer {
         this.phone = phone;
         this.divisionID = divisionID;
         this.divisionName = divisionName;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
     }
 
     /**
@@ -85,7 +91,7 @@ public class Customer {
      * Getter for customer postal code.
      * @return int PostalCode
      */
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
@@ -93,7 +99,7 @@ public class Customer {
      * Setter postal code.
      * @param postalCode
      */
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -143,5 +149,21 @@ public class Customer {
      */
     public void setDivisionName(String divisionName) {
         this.divisionName = divisionName;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

@@ -12,7 +12,7 @@
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="780.0">
          <children>
-            <TableView layoutX="16.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
+            <TableView fx:id="CustomerTable" layoutX="16.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
                <columns>
                   <TableColumn fx:id="CustomerID" prefWidth="75.0" text="Customer ID" />
                   <TableColumn fx:id="CustomerName" prefWidth="121.0" text="Customer Name" />

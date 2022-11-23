@@ -1,6 +1,9 @@
 package DAO;
 
+import Model.Customer;
 import Model.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.sound.midi.SysexMessage;
 import java.sql.*;
@@ -114,4 +117,38 @@ public class CustomerHelper {
         }
     }
 
+    public static ObservableList getAllCustomers() throws SQLException {
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM customers";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Customer c = new Customer(rs.getInt("Customer_ID"),
+                    rs.getString("Customer_Name"),
+                    rs.getString("Address"),
+                    rs.getString("Postal_Code"),
+                    rs.getString("Phone"),
+                    rs.getInt("Division_ID"),
+                    CustomerHelper.getSecondDivisionName(rs.getInt("Division_ID")),
+                    rs.getString("Created_By"),
+                    rs.getTimestamp("Last_Update").toLocalDateTime());
+            customers.add(c);
+        }
+        return customers;
+    }
+
+
+    public static String getSecondDivisionName(int divisionID) throws SQLException {
+        String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, divisionID);
+        ResultSet rs = ps.executeQuery();
+        try {
+            rs.next();
+            return rs.getString("Division");
+        } catch (SQLException e) {
+            GeneralHelper.createErrorMessage("No selection returned!", "Error!");
+            return "";
+        }
+    }
 }
