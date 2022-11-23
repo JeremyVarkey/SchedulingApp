@@ -48,7 +48,7 @@ public class AddCustomer implements Initializable {
     }
 
     /**
-     * Save a new Customer. Error check that all inputs are filled.
+     * Save a new Customer or edit an existing customer. Error check that all inputs are filled.
      * @param event
      * @throws SQLException
      * @throws IOException
@@ -94,6 +94,7 @@ public class AddCustomer implements Initializable {
                         try {
                             LinkedList<String> states = setSecondDivision();
                             StateSelection.getItems().setAll(states);
+                            StateSelection.setValue("");
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
@@ -115,18 +116,22 @@ public class AddCustomer implements Initializable {
                         CustomerHelper.getCountryIDfromDivisionID(
                                 CustomerMenu.customerToModify.getDivisionID()));
                 CountrySelection.setValue(CustCountry);
+
+                LinkedList<String> states = setSecondDivision();
+                StateSelection.getItems().setAll(states);
+                StateSelection.setValue(CustomerMenu.customerToModify.getDivisionName());
+
+                /**
+                 * Lambda for creating listener on Country Selection to change the second division list, and initially set as Empty
+                 * when a new country selection is made.
+                 */
                 CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
-                    if (newvalue == null) {
-                        StateSelection.getItems().clear();
-                        StateSelection.setDisable(true);
-                    } else {
-                        try {
-                            LinkedList<String> states = setSecondDivision();
-                            StateSelection.getItems().setAll(states);
-                            StateSelection.setValue(CustomerHelper.getSecondDivisionName(CustomerMenu.customerToModify.getDivisionID()));
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        }
+                    try {
+                        LinkedList<String> divisions = setSecondDivision();
+                        StateSelection.getItems().setAll(divisions);
+                        StateSelection.setValue("");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
                     }
                 });
             } catch (Exception e) {
