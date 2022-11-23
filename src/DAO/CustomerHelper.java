@@ -150,4 +150,30 @@ public class CustomerHelper {
             return "";
         }
     }
+
+    /**
+     * Get country name from Country table using CountryID
+     * @throws SQLException
+     */
+    public static String getCountry(int countryID) throws SQLException {
+        String sql = "SELECT Country FROM countries WHERE Country_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, countryID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getString("Country");
+    }
+
+    /**
+     * Get countryID from SecondDivisionID
+     * @throws SQLException
+     */
+    public static int getCountryIDfromDivisionID(int divisionID) throws SQLException {
+        String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, divisionID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getInt("Country_ID");
+    }
 }

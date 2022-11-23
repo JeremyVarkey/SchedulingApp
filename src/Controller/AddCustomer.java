@@ -77,30 +77,63 @@ public class AddCustomer implements Initializable {
     }
 
     /**
-     * Initialize method. Sets choicebox values based on user input.
+     * Initialize method. Sets choicebox values based on user input. Prepopulates the Customer Info if a customer has been selected.
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            CountrySelection.getItems().addAll(CustomerHelper.getCountries());
-            CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
-                if (newvalue == null) {
-                    StateSelection.getItems().clear();
-                    StateSelection.setDisable(true);
-                } else {
-                    try {
-                        LinkedList<String> states = setSecondDivision();
-                        StateSelection.getItems().setAll(states);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+        if (!CustomerMenu.toModifyScreen) {
+            try {
+                CountrySelection.getItems().addAll(CustomerHelper.getCountries());
+                CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
+                    if (newvalue == null) {
+                        StateSelection.getItems().clear();
+                        StateSelection.setDisable(true);
+                    } else {
+                        try {
+                            LinkedList<String> states = setSecondDivision();
+                            StateSelection.getItems().setAll(states);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
                     }
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (CustomerMenu.customerToModify != null) {
+            CustomerID.setText(((Integer)CustomerMenu.customerToModify.getId()).toString());
+            CustomerName.setText(CustomerMenu.customerToModify.getCustomerName());
+            Address.setText(CustomerMenu.customerToModify.getAddress());
+            PostalCode.setText(CustomerMenu.customerToModify.getPostalCode());
+            PhoneNumber.setText(CustomerMenu.customerToModify.getPhone());
+
+            try {
+                CountrySelection.getItems().addAll(CustomerHelper.getCountries());
+                String CustCountry = CustomerHelper.getCountry(
+                        CustomerHelper.getCountryIDfromDivisionID(
+                                CustomerMenu.customerToModify.getDivisionID()));
+                CountrySelection.setValue(CustCountry);
+                CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
+                    if (newvalue == null) {
+                        StateSelection.getItems().clear();
+                        StateSelection.setDisable(true);
+                    } else {
+                        try {
+                            LinkedList<String> states = setSecondDivision();
+                            StateSelection.getItems().setAll(states);
+                            StateSelection.setValue(CustomerHelper.getSecondDivisionName(CustomerMenu.customerToModify.getDivisionID()));
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**

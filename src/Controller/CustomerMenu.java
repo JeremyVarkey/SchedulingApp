@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.CustomerHelper;
+import DAO.GeneralHelper;
 import Model.Customer;
 import Model.JDBC;
 import javafx.collections.ObservableList;
@@ -46,8 +47,13 @@ public class CustomerMenu implements Initializable {
     @FXML private RadioButton WeeklyViewButton;
     @FXML private TableView<Customer> CustomerTable;
 
+    public static Customer customerToModify;
+    public static boolean toModifyScreen;
+
+
     @FXML
     void AddCustomerButtonClick(ActionEvent event) throws IOException {
+        toModifyScreen = false;
         root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -63,7 +69,19 @@ public class CustomerMenu implements Initializable {
 
     @FXML
     void EditCustomerButtonClick(ActionEvent event) throws IOException {
+        try {
+            ObservableList<Customer> c = CustomerTable.getSelectionModel().getSelectedItems();
+            customerToModify = c.get(0);
+            toModifyScreen = true;
+            root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
+            stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
+        } catch (Exception e) {
+            GeneralHelper.createErrorMessage("Please select a customer!", "Error!");
+        }
     }
 
     @FXML
