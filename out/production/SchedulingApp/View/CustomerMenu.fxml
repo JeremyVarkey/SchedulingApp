@@ -10,18 +10,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerMenu">
    <children>
-      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="780.0">
+      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="843.0">
          <children>
-            <TableView fx:id="CustomerTable" layoutX="16.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
+            <TableView fx:id="CustomerTable" layoutX="16.0" layoutY="138.0" prefHeight="372.0" prefWidth="806.0">
                <columns>
-                  <TableColumn fx:id="CustomerID" prefWidth="75.0" text="Customer ID" />
-                  <TableColumn fx:id="CustomerName" prefWidth="121.0" text="Customer Name" />
-                  <TableColumn fx:id="Address" prefWidth="81.0" text="Address" />
-                  <TableColumn fx:id="PostalCode" prefWidth="82.0" text="Postal Code" />
-                  <TableColumn fx:id="Phone" prefWidth="92.0" text="Phone" />
-                  <TableColumn fx:id="CreateBy" prefWidth="88.0" text="Create By" />
-                  <TableColumn fx:id="LastUpdate" prefWidth="90.0" text="Last Update" />
-                  <TableColumn fx:id="State" prefWidth="122.0" text="State/Province" />
+                  <TableColumn fx:id="CustomerID" prefWidth="71.0" text="CustomerID" />
+                  <TableColumn fx:id="CustomerName" prefWidth="125.0" text="CustomerName" />
+                  <TableColumn fx:id="Address" prefWidth="115.0" text="Address" />
+                  <TableColumn fx:id="PostalCode" prefWidth="91.0" text="PostalCode" />
+                  <TableColumn fx:id="Phone" prefWidth="96.0" text="Phone" />
+                  <TableColumn fx:id="CreateBy" prefWidth="95.0" text="CreateBy" />
+                  <TableColumn fx:id="LastUpdate" prefWidth="117.0" text="LastUpdate" />
+                  <TableColumn fx:id="State" prefWidth="95.0" text="State" />
                </columns>
             </TableView>
             <Button fx:id="LogoutButton" layoutX="676.0" layoutY="57.0" mnemonicParsing="false" onAction="#LogoutButtonClick" prefHeight="31.0" prefWidth="90.0" text="Logout" />

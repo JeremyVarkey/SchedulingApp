@@ -15,7 +15,7 @@ public class Customer {
     private int divisionID;
     private String divisionName;
     private String createdBy;
-    private LocalDateTime lastUpdate;
+    private String lastUpdate;
 
     /**
      * Constructor for Customer object.
@@ -27,7 +27,7 @@ public class Customer {
      * @param divisionID
      * @param divisionName
      */
-    public Customer(int id, String customerName, String address, String postalCode, String phone, int divisionID, String divisionName, String createdBy, LocalDateTime lastUpdate) {
+    public Customer(int id, String customerName, String address, String postalCode, String phone, int divisionID, String divisionName, String createdBy, String lastUpdate) {
         this.id = id;
         this.customerName = customerName;
         this.address = address;
@@ -159,11 +159,11 @@ public class Customer {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
+    public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 }

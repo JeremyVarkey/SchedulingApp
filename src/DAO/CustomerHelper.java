@@ -123,7 +123,7 @@ public class CustomerHelper {
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            Customer c = new Customer(rs.getInt("Customer_ID"),
+            customers.add(new Customer(rs.getInt("Customer_ID"),
                     rs.getString("Customer_Name"),
                     rs.getString("Address"),
                     rs.getString("Postal_Code"),
@@ -131,8 +131,7 @@ public class CustomerHelper {
                     rs.getInt("Division_ID"),
                     CustomerHelper.getSecondDivisionName(rs.getInt("Division_ID")),
                     rs.getString("Created_By"),
-                    rs.getTimestamp("Last_Update").toLocalDateTime());
-            customers.add(c);
+                    rs.getTimestamp("Last_Update").toLocalDateTime().format(GeneralHelper.format())));
         }
         return customers;
     }

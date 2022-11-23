@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.CustomerHelper;
 import Model.Customer;
+import Model.JDBC;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class CustomerMenu implements Initializable {
@@ -26,23 +28,23 @@ public class CustomerMenu implements Initializable {
     Parent root;
 
     @FXML private Button AddCustomerButton;
-    @FXML private TableColumn Address;
+    @FXML private TableColumn<Customer, String> Address;
     @FXML private RadioButton AllAppointmentsButton;
-    @FXML private TableColumn CreateBy;
-    @FXML private TableColumn CustomerID;
-    @FXML private TableColumn CustomerName;
+    @FXML private TableColumn<Customer, String> CreateBy;
+    @FXML private TableColumn<Customer, Integer> CustomerID;
+    @FXML private TableColumn<Customer, String> CustomerName;
     @FXML private Button DeleteCustomerButton;
     @FXML private Button EditCustomerButton;
-    @FXML private TableColumn LastUpdate;
+    @FXML private TableColumn<Customer, String> LastUpdate;
     @FXML private Button LogoutButton;
     @FXML private RadioButton MonthlyViewButton;
-    @FXML private TableColumn Phone;
-    @FXML private TableColumn PostalCode;
-    @FXML private TableColumn State;
+    @FXML private TableColumn<Customer, String> Phone;
+    @FXML private TableColumn<Customer, String> PostalCode;
+    @FXML private TableColumn<Customer, String> State;
     @FXML private ToggleGroup TimeFrame;
     @FXML private RadioButton ViewCustomersButton;
     @FXML private RadioButton WeeklyViewButton;
-    @FXML private TableView CustomerTable;
+    @FXML private TableView<Customer> CustomerTable;
 
     @FXML
     void AddCustomerButtonClick(ActionEvent event) throws IOException {
@@ -66,7 +68,8 @@ public class CustomerMenu implements Initializable {
 
     @FXML
     void LogoutButtonClick(ActionEvent event) {
-
+        JDBC.closeConnection();
+        System.exit(0);
     }
 
     @FXML
@@ -88,7 +91,15 @@ public class CustomerMenu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             ObservableList<Customer> allCustomers = CustomerHelper.getAllCustomers();
-            CustomerID.setCellValueFactory(new PropertyValueFactory<>("id"));
+            CustomerTable.setItems(allCustomers);
+            CustomerID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
+            CustomerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
+            Address.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
+            PostalCode.setCellValueFactory(new PropertyValueFactory<Customer, String>("postalCode"));
+            Phone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
+            CreateBy.setCellValueFactory(new PropertyValueFactory<Customer, String>("createdBy"));
+            LastUpdate.setCellValueFactory(new PropertyValueFactory<Customer, String>("lastUpdate"));
+            State.setCellValueFactory(new PropertyValueFactory<Customer, String>("divisionName"));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
