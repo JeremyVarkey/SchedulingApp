@@ -2,7 +2,9 @@ package DAO;
 
 import Model.JDBC;
 
+import javax.sound.midi.SysexMessage;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -67,7 +69,7 @@ public class CustomerHelper {
     }
 
     /**
-     * Gets Second Division ID int using division name.
+     * Gets Second Division ID int using division name. Returns -1 if none.
      * @param division String
      * @return int Second Division ID
      * @throws SQLException
@@ -93,9 +95,14 @@ public class CustomerHelper {
         ps.setString(2, address);
         ps.setString(3, postal);
         ps.setString(4, phone);
-        ps.setTimestamp(5, Timestamp.valueOf(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format())));
+        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
+        System.out.println(LocalDateTime.now());
+        System.out.println(LocalDateTime.now(ZoneId.systemDefault()));
+        System.out.println(LocalDateTime.now(ZoneId.of("UTC")));
+        System.out.println(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format()));
+        System.out.println(Timestamp.valueOf(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format())));
         ps.setString(6, user);
-        ps.setTimestamp(7, Timestamp.valueOf(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format())));
+        ps.setTimestamp(7,Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
         ps.setString(8, user);
         ps.setInt(9,divisionID);
 

@@ -121,7 +121,7 @@ public class LoginHelper {
             rs.next();
             return rs.getString("Password").equals(password);
         } catch (SQLException e) {
-            System.out.println("Please input a username or password!");
+            System.out.println("Please input a correct username and password combination!");
             return false;
         }
     }

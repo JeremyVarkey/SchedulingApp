@@ -39,10 +39,20 @@ public class AddCustomer implements Initializable {
     @FXML private ChoiceBox<String> StateSelection;
 
     @FXML
-    void CancelButtonClick(ActionEvent event) {
-
+    void CancelButtonClick(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
+        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
+    /**
+     * Save a new Customer. Error check that all inputs are filled.
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void SaveButtonClick(ActionEvent event) throws SQLException, IOException {
         String name = CustomerName.getText();
@@ -52,14 +62,18 @@ public class AddCustomer implements Initializable {
         String user = Login.loggedUser;
         int divisionId = CustomerHelper.getSecondDivisionID(StateSelection.getValue());
 
-        CustomerHelper.insertNewCustomer(name, address, postal, phone, user, divisionId);
-        GeneralHelper.createInformMessage("Successfully added new Customer!", "Success!");
+        if (name.isEmpty() || address.isEmpty() || postal.isEmpty() || phone.isEmpty() || user.isEmpty() || divisionId == -1) {
+            GeneralHelper.createErrorMessage("Please fill in all inputs!", "Error!");
+        } else {
+            CustomerHelper.insertNewCustomer(name, address, postal, phone, user, divisionId);
+            GeneralHelper.createInformMessage("Successfully added new Customer!", "Success!");
 
-        root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
-        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
+            stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     /**
