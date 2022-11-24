@@ -34,8 +34,6 @@
                   <ToggleGroup fx:id="TimeFrame" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="WeeklyViewButton" layoutX="337.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainScreenWeeklyView" text="Weekly View" toggleGroup="$TimeFrame" />
-            <RadioButton fx:id="MonthlyViewButton" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainScreenMonthlyView" text="Monthly View" toggleGroup="$TimeFrame" />
             <RadioButton fx:id="AllAppointmentsButton" layoutX="589.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainScreenAllAppointments" text="All Appointments" toggleGroup="$TimeFrame" />
          </children>
       </AnchorPane>

@@ -31,6 +31,7 @@ public class MainMenu {
             root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
             stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
             scene = new Scene(root);
+            stage.setTitle("Customer Menu");
             stage.setScene(scene);
             stage.show();
         }

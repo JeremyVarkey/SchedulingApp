@@ -42,6 +42,7 @@ public class AddCustomer implements Initializable {
     void CancelButtonClick(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
         stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        stage.setTitle("Customer Menu");
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -76,6 +77,7 @@ public class AddCustomer implements Initializable {
 
             root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
             stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+            stage.setTitle("Customer Menu");
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

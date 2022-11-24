@@ -1,7 +1,9 @@
 package Controller;
 
+import DAO.AppointmentsHelper;
 import DAO.CustomerHelper;
 import DAO.GeneralHelper;
+import Model.Appointment;
 import Model.Customer;
 import Model.JDBC;
 import javafx.collections.ObservableList;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerMenu implements Initializable {
@@ -57,14 +60,35 @@ public class CustomerMenu implements Initializable {
         root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
         scene = new Scene(root);
+        stage.setTitle("Add Customer");
         stage.setScene(scene);
         stage.show();
     }
 
 
     @FXML
-    void DeleteCustomerButtonClick(ActionEvent event) {
+    void DeleteCustomerButtonClick(ActionEvent event) throws SQLException {
+        try {
+            ObservableList<Customer> c = CustomerTable.getSelectionModel().getSelectedItems();
+            customerToModify = c.get(0);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Deleting a Customer deletes all of their appointments as well. Are you sure you wish to proceed?");
+            Optional<ButtonType> confirm = alert.showAndWait();
+            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                AppointmentsHelper.deleteAppointmentFromCustomerID(customerToModify.getId());
+                CustomerHelper.deleteCustomerFromCustomerID(customerToModify.getId());
+                GeneralHelper.createInformMessage("Delete successful!", "Delete!");
 
+                root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
+                stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+                scene = new Scene(root);
+                stage.setTitle("Customer Menu");
+                stage.setScene(scene);
+                stage.show();
+            }
+        } catch (Exception e) {
+            GeneralHelper.createErrorMessage("Please select a customer!", "Error!");
+        }
     }
 
     @FXML
@@ -75,6 +99,7 @@ public class CustomerMenu implements Initializable {
             toModifyScreen = true;
             root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
             stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+            stage.setTitle("Edit Customer");
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -91,19 +116,15 @@ public class CustomerMenu implements Initializable {
     }
 
     @FXML
-    void toMainScreenAllAppointments(ActionEvent event) {
-
+    void toMainScreenAllAppointments(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        scene = new Scene(root);
+        stage.setTitle("Main Menu");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @FXML
-    void toMainScreenMonthlyView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void toMainScreenWeeklyView(ActionEvent event) {
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

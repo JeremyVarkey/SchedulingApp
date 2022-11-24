@@ -65,4 +65,16 @@ public class AppointmentsHelper {
     }
 
 
+    public static int deleteAppointmentFromCustomerID(int customerID) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, customerID);
+        try {
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (Exception e) {
+            System.out.println("Delete failed! Please try again.");
+            return 0;
+        }
+    }
 }
