@@ -65,8 +65,14 @@ public class AddCustomer implements Initializable {
         if (name.isEmpty() || address.isEmpty() || postal.isEmpty() || phone.isEmpty() || user.isEmpty() || divisionId == -1) {
             GeneralHelper.createErrorMessage("Please fill in all inputs!", "Error!");
         } else {
-            CustomerHelper.insertNewCustomer(name, address, postal, phone, user, divisionId);
-            GeneralHelper.createInformMessage("Successfully added new Customer!", "Success!");
+            if (!CustomerMenu.toModifyScreen) {
+                CustomerHelper.insertNewCustomer(name, address, postal, phone, user, divisionId);
+                GeneralHelper.createInformMessage("Successfully added new Customer!", "Success!");
+            } else {
+                int id = Integer.parseInt(CustomerID.getText());
+                CustomerHelper.editCustomer(name, address, postal, phone, user, divisionId, id);
+                GeneralHelper.createInformMessage("Successfully edited Customer!", "Success!");
+            }
 
             root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
             stage = (Stage)(((Node)event.getSource()).getScene().getWindow());

@@ -99,11 +99,6 @@ public class CustomerHelper {
         ps.setString(3, postal);
         ps.setString(4, phone);
         ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
-        System.out.println(LocalDateTime.now());
-        System.out.println(LocalDateTime.now(ZoneId.systemDefault()));
-        System.out.println(LocalDateTime.now(ZoneId.of("UTC")));
-        System.out.println(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format()));
-        System.out.println(Timestamp.valueOf(GeneralHelper.LocaltoUTC(LocalDateTime.now()).format(GeneralHelper.format())));
         ps.setString(6, user);
         ps.setTimestamp(7,Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
         ps.setString(8, user);
@@ -176,4 +171,27 @@ public class CustomerHelper {
         rs.next();
         return rs.getInt("Country_ID");
     }
+
+    public static int editCustomer(String Name, String address, String postal, String phone, String user, int divisionID, int customerID) throws SQLException {
+        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ?" +
+                " WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, Name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
+        ps.setString(6, user);
+        ps.setInt(7, divisionID);
+        ps.setInt(8, customerID);
+
+        try {
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLIntegrityConstraintViolationException | IllegalStateException e) {
+            GeneralHelper.createErrorMessage("Edit Customer failed!", "Error!");
+            return -1;
+        }
+    }
+
 }
