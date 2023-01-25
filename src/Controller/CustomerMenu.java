@@ -54,6 +54,11 @@ public class CustomerMenu implements Initializable {
     public static boolean toModifyScreen;
 
 
+    /**
+     * Add Customer to database.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void AddCustomerButtonClick(ActionEvent event) throws IOException {
         toModifyScreen = false;
@@ -66,6 +71,11 @@ public class CustomerMenu implements Initializable {
     }
 
 
+    /**
+     * Delete selected Customer from database. Will also delete all associated appointments of customer.
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void DeleteCustomerButtonClick(ActionEvent event) throws SQLException {
         try {
@@ -91,6 +101,11 @@ public class CustomerMenu implements Initializable {
         }
     }
 
+    /**
+     * Edit selected customer
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void EditCustomerButtonClick(ActionEvent event) throws IOException {
         try {
@@ -109,12 +124,21 @@ public class CustomerMenu implements Initializable {
         }
     }
 
+    /**
+     * Logout
+     * @param event
+     */
     @FXML
     void LogoutButtonClick(ActionEvent event) {
         JDBC.closeConnection();
         System.exit(0);
     }
 
+    /**
+     * To main screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void toMainScreenAllAppointments(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
@@ -126,6 +150,11 @@ public class CustomerMenu implements Initializable {
     }
 
 
+    /**
+     * Initialize table with all customer info from database.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
