@@ -11,24 +11,24 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenu">
    <children>
-      <TableView layoutX="14.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
+      <TableView fx:id="ApptTable" layoutX="14.0" layoutY="138.0" prefHeight="329.0" prefWidth="752.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Appt ID" />
-          <TableColumn prefWidth="132.0" text="Title" />
-            <TableColumn prefWidth="76.0" text="Location" />
-            <TableColumn prefWidth="71.0" text="Contact" />
-            <TableColumn prefWidth="76.0" text="Type" />
-            <TableColumn prefWidth="77.0" text="Start Time" />
-            <TableColumn prefWidth="81.0" text="End Time" />
-            <TableColumn prefWidth="76.0" text="Cust ID" />
-            <TableColumn prefWidth="87.0" text="User ID" />
+          <TableColumn fx:id="ApptID" prefWidth="75.0" text="Appt ID" />
+          <TableColumn fx:id="Title" prefWidth="132.0" text="Title" />
+            <TableColumn fx:id="Location" prefWidth="76.0" text="Location" />
+            <TableColumn fx:id="Contact" prefWidth="71.0" text="Contact" />
+            <TableColumn fx:id="Type" prefWidth="76.0" text="Type" />
+            <TableColumn fx:id="StartTime" prefWidth="77.0" text="Start Time" />
+            <TableColumn fx:id="EndTime" prefWidth="81.0" text="End Time" />
+            <TableColumn fx:id="CustID" prefWidth="76.0" text="Cust ID" />
+            <TableColumn fx:id="UserID" prefWidth="87.0" text="User ID" />
         </columns>
       </TableView>
-      <Button layoutX="14.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Reports" />
-      <Button layoutX="676.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Logout" />
-      <Button layoutX="492.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Delete Appt" />
-      <Button layoutX="337.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Edit Appt" />
-      <Button layoutX="200.0" layoutY="75.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="Add Appt" />
+      <Button fx:id="Reports" layoutX="14.0" layoutY="75.0" mnemonicParsing="false" onAction="#ReportsClick" prefHeight="31.0" prefWidth="90.0" text="Reports" />
+      <Button fx:id="Logout" layoutX="676.0" layoutY="75.0" mnemonicParsing="false" onAction="#LogoutClick" prefHeight="31.0" prefWidth="90.0" text="Logout" />
+      <Button fx:id="DeleteAppt" layoutX="492.0" layoutY="75.0" mnemonicParsing="false" onAction="#DeleteApptClick" prefHeight="31.0" prefWidth="90.0" text="Delete Appt" />
+      <Button fx:id="EditAppt" layoutX="337.0" layoutY="75.0" mnemonicParsing="false" onAction="#EditApptClick" prefHeight="31.0" prefWidth="90.0" text="Edit Appt" />
+      <Button fx:id="AddAppt" layoutX="200.0" layoutY="75.0" mnemonicParsing="false" onAction="#AddApptClick" prefHeight="31.0" prefWidth="90.0" text="Add Appt" />
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Schedule" />
       <RadioButton fx:id="ViewCustomersButton" layoutX="200.0" layoutY="14.0" mnemonicParsing="false" onAction="#ViewCustomersButtonClick" text="View Customers">
          <toggleGroup>
@@ -37,6 +37,6 @@
       <RadioButton fx:id="WeeklyViewButton" layoutX="337.0" layoutY="14.0" mnemonicParsing="false" text="Weekly View" toggleGroup="$TimeFrame" />
       <RadioButton fx:id="MonthlyViewButton" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" text="Monthly View" toggleGroup="$TimeFrame" />
       <RadioButton fx:id="AllAppointmentsButton" layoutX="589.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="All Appointments" toggleGroup="$TimeFrame" />
-      <DatePicker layoutX="582.0" layoutY="35.0" />
+      <DatePicker fx:id="CalendarSelector" layoutX="582.0" layoutY="35.0" onAction="#CalendarSelect" />
    </children>
 </AnchorPane>
