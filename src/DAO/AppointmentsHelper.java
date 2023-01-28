@@ -66,7 +66,7 @@ public class AppointmentsHelper {
 
 
     /**
-     * Delete's appointments for a specified customer ID.
+     * Deletes appointments for a specified customer ID (Int).
      * @param customerID
      * @return
      * @throws SQLException
@@ -84,6 +84,11 @@ public class AppointmentsHelper {
         }
     }
 
+    /**
+     * Returns an ObversableList of all User IDs in the database
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Integer> getAllUserID () throws SQLException {
         ObservableList<Integer> IDs = FXCollections.observableArrayList();
         String sql = "SELECT User_ID FROM users";
@@ -91,6 +96,38 @@ public class AppointmentsHelper {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             IDs.add(rs.getInt("User_ID"));
+        }
+        return IDs;
+    }
+
+    /**
+     * Returns an ObversableList of all customer IDs in the database
+     * @return
+     * @throws SQLException
+     */
+    public static ObservableList<Integer> getAllCustID () throws SQLException {
+        ObservableList<Integer> IDs = FXCollections.observableArrayList();
+        String sql = "SELECT Customer_ID FROM customers";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            IDs.add(rs.getInt("Customer_ID"));
+        }
+        return IDs;
+    }
+
+    /**
+     * Returns an ObversableList of all contact IDs in the database
+     * @return
+     * @throws SQLException
+     */
+    public static ObservableList<Integer> getAllContactID () throws SQLException {
+        ObservableList<Integer> IDs = FXCollections.observableArrayList();
+        String sql = "SELECT Contact_ID FROM contacts";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            IDs.add(rs.getInt("Contact_ID"));
         }
         return IDs;
     }

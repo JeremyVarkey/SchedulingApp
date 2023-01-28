@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Controller.MainMenu;
 import DAO.AppointmentsHelper;
 import DAO.CustomerHelper;
@@ -15,12 +16,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddAppointment implements Initializable {
@@ -35,10 +38,8 @@ public class AddAppointment implements Initializable {
     public ChoiceBox<Integer> UserID;
     public DatePicker StartDate;
     public DatePicker EndDate;
-    public Spinner<LocalTime> StartHour;
-    public Spinner<LocalTime> StartMinute;
-    public Spinner<LocalTime> EndHour;
-    public Spinner<LocalTime> EndMinute;
+    public Spinner<LocalTime> StartTime;
+    public Spinner<LocalTime> EndTime;
     public Button Save;
     public Button Cancel;
 
@@ -74,10 +75,73 @@ public class AddAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            UserID.setItems(AppointmentsHelper.getAllUserID());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if (!MainMenu.toModifyScreen) {
+            try {
+                UserID.getItems().addAll(AppointmentsHelper.getAllUserID());
+                CustomerID.getItems().addAll(AppointmentsHelper.getAllCustID());
+                ContactID.getItems().addAll(AppointmentsHelper.getAllContactID());
+
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+
+                SpinnerValueFactory<LocalTime> startValueFactory = new SpinnerValueFactory<LocalTime>() {
+                    {
+                        setConverter(new LocalTimeStringConverter(format,null));
+                    }
+                    final LocalTime def = LocalTime.now();
+
+                    @Override
+                    public void decrement(int i) {
+                        if(this.getValue() == null) {
+                            this.setValue(LocalTime.now());
+                        }else {
+                            LocalTime now = getValue();
+                            setValue(now.minusMinutes(1));
+                        }
+                    }
+
+                    @Override
+                    public void increment(int i) {
+                        if(this.getValue() == null) {
+                            this.setValue(LocalTime.now());
+                        } else {
+                            LocalTime now = getValue();
+                            setValue(now.plusMinutes(1));
+                        }
+                    }
+                };
+                StartTime.setValueFactory(startValueFactory);
+
+                SpinnerValueFactory<LocalTime> endValueFactory = new SpinnerValueFactory<LocalTime>() {
+                    {
+                        setConverter(new LocalTimeStringConverter(format,null));
+                    }
+
+                    @Override
+                    public void decrement(int i) {
+                        if(this.getValue() == null) {
+                            this.setValue(LocalTime.now());
+                        }else {
+                            LocalTime now = getValue();
+                            setValue(now.minusMinutes(1));
+                        }
+                    }
+
+                    @Override
+                    public void increment(int i) {
+                        if(this.getValue() == null) {
+                            this.setValue(LocalTime.now());
+                        } else {
+                            LocalTime now = getValue();
+                            setValue(now.plusMinutes(1));
+                        }
+                    }
+                };
+                EndTime.setValueFactory(endValueFactory);
+
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
