@@ -65,6 +65,12 @@ public class AppointmentsHelper {
     }
 
 
+    /**
+     * Delete's appointments for a specified customer ID.
+     * @param customerID
+     * @return
+     * @throws SQLException
+     */
     public static int deleteAppointmentFromCustomerID(int customerID) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -76,5 +82,16 @@ public class AppointmentsHelper {
             System.out.println("Delete failed! Please try again.");
             return 0;
         }
+    }
+
+    public static ObservableList<Integer> getAllUserID () throws SQLException {
+        ObservableList<Integer> IDs = FXCollections.observableArrayList();
+        String sql = "SELECT User_ID FROM users";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            IDs.add(rs.getInt("User_ID"));
+        }
+        return IDs;
     }
 }

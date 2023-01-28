@@ -95,6 +95,9 @@ public class AddCustomer implements Initializable {
         if (!CustomerMenu.toModifyScreen) {
             try {
                 CountrySelection.getItems().addAll(CustomerHelper.getCountries());
+                /**
+                 * Lambda to set the State depending on the Country property
+                 */
                 CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
                     if (newvalue == null) {
                         StateSelection.getItems().clear();

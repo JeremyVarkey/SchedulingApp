@@ -1,37 +1,51 @@
 package Controller;
 
+import Controller.MainMenu;
+import DAO.AppointmentsHelper;
+import DAO.CustomerHelper;
+import Model.Appointment;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 
-public class AddAppointment {
+public class AddAppointment implements Initializable {
+
+    public TextField AppointmentID;
+    public TextField Title;
+    public TextField Description;
+    public TextField Location;
+    public TextField Type;
+    public ChoiceBox<Integer> ContactID;
+    public ChoiceBox<Integer> CustomerID;
+    public ChoiceBox<Integer> UserID;
+    public DatePicker StartDate;
+    public DatePicker EndDate;
+    public Spinner<LocalTime> StartHour;
+    public Spinner<LocalTime> StartMinute;
+    public Spinner<LocalTime> EndHour;
+    public Spinner<LocalTime> EndMinute;
+    public Button Save;
+    public Button Cancel;
+
     Stage stage;
     Scene scene;
     Parent root;
-    Integer appointmentID;
-    String title;
-    String description;
-    String location;
-    String type;
-    Integer contactID;
-    Integer customerID;
-    Integer userID;
-    LocalDate startDate;
-    LocalDate endDate;
-    LocalTime startHour;
-    LocalTime startMinute;
-    LocalTime startTime;
-    LocalTime endTime;
-    LocalTime endHour;
-    LocalTime endMinute;
+
 
 
 
@@ -55,6 +69,16 @@ public class AddAppointment {
     @FXML
     void SaveClick(ActionEvent event) {
 
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            UserID.setItems(AppointmentsHelper.getAllUserID());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }
