@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalTimeStringConverter;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -87,7 +88,6 @@ public class AddAppointment implements Initializable {
                     {
                         setConverter(new LocalTimeStringConverter(format,null));
                     }
-                    final LocalTime def = LocalTime.now();
 
                     @Override
                     public void decrement(int i) {
