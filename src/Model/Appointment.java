@@ -19,6 +19,7 @@ public class Appointment {
     private int customerID;
     private int userID;
     private int contactID;
+    private String contact;
 
     /**
      * Constructor for an Appointment object
@@ -36,10 +37,11 @@ public class Appointment {
      * @param customerID
      * @param userID
      * @param contactID
+     * @param contact
      */
     public Appointment(int aptID, String title, String description, String location,String type, LocalDateTime start,
                        LocalDateTime end, LocalDateTime createdDateTime, String createdBy, LocalDateTime lastUpdated,
-                       String lastUpdatedBy, int customerID, int userID, int contactID) {
+                       String lastUpdatedBy, int customerID, int userID, int contactID, String contact) {
 
         this.aptID = aptID;
         this.title = title;
@@ -55,6 +57,7 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
+        this.contact = contact;
     }
 
     /**
@@ -167,5 +170,13 @@ public class Appointment {
      */
     public int getContactID() {
         return contactID;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }

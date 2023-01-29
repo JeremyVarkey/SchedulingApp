@@ -34,15 +34,17 @@ public class AddAppointment implements Initializable {
     public TextField Description;
     public TextField Location;
     public TextField Type;
-    public ChoiceBox<Integer> ContactID;
+    public ChoiceBox<String> ContactID;
     public ChoiceBox<Integer> CustomerID;
     public ChoiceBox<Integer> UserID;
     public DatePicker StartDate;
     public DatePicker EndDate;
-    public Spinner<LocalTime> StartTime;
-    public Spinner<LocalTime> EndTime;
     public Button Save;
     public Button Cancel;
+    public TextField StartHour;
+    public TextField StartMinute;
+    public TextField EndHour;
+    public TextField EndMinute;
 
     Stage stage;
     Scene scene;
@@ -82,66 +84,11 @@ public class AddAppointment implements Initializable {
                 CustomerID.getItems().addAll(AppointmentsHelper.getAllCustID());
                 ContactID.getItems().addAll(AppointmentsHelper.getAllContactID());
 
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-
-                SpinnerValueFactory<LocalTime> startValueFactory = new SpinnerValueFactory<LocalTime>() {
-                    {
-                        setConverter(new LocalTimeStringConverter(format,null));
-                    }
-
-                    @Override
-                    public void decrement(int i) {
-                        if(this.getValue() == null) {
-                            this.setValue(LocalTime.now());
-                        }else {
-                            LocalTime now = getValue();
-                            setValue(now.minusMinutes(1));
-                        }
-                    }
-
-                    @Override
-                    public void increment(int i) {
-                        if(this.getValue() == null) {
-                            this.setValue(LocalTime.now());
-                        } else {
-                            LocalTime now = getValue();
-                            setValue(now.plusMinutes(1));
-                        }
-                    }
-                };
-                StartTime.setValueFactory(startValueFactory);
-
-                SpinnerValueFactory<LocalTime> endValueFactory = new SpinnerValueFactory<LocalTime>() {
-                    {
-                        setConverter(new LocalTimeStringConverter(format,null));
-                    }
-
-                    @Override
-                    public void decrement(int i) {
-                        if(this.getValue() == null) {
-                            this.setValue(LocalTime.now());
-                        }else {
-                            LocalTime now = getValue();
-                            setValue(now.minusMinutes(1));
-                        }
-                    }
-
-                    @Override
-                    public void increment(int i) {
-                        if(this.getValue() == null) {
-                            this.setValue(LocalTime.now());
-                        } else {
-                            LocalTime now = getValue();
-                            setValue(now.plusMinutes(1));
-                        }
-                    }
-                };
-                EndTime.setValueFactory(endValueFactory);
-
-
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+        } else if (MainMenu.apptToModify != null) {
+            System.out.println("Need to fill in modify appointment code.");
         }
     }
 

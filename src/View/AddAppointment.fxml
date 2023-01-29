@@ -23,7 +23,7 @@
       <Text layoutX="42.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" textAlignment="CENTER" wrappingWidth="105.13671875" />
       <Text layoutX="42.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" textAlignment="CENTER" wrappingWidth="105.13671875" />
       <Text layoutX="42.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" textAlignment="CENTER" wrappingWidth="105.13671875" />
-      <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact ID" textAlignment="CENTER" wrappingWidth="105.13671875" />
+      <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" textAlignment="CENTER" wrappingWidth="105.13671875" />
       <Text layoutX="42.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID" textAlignment="CENTER" wrappingWidth="105.13671875" />
       <Text layoutX="42.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID" textAlignment="CENTER" wrappingWidth="105.13671875" />
       <Text layoutX="42.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" textAlignment="CENTER" wrappingWidth="105.13671875" />

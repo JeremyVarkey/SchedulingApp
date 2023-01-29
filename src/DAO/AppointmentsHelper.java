@@ -38,7 +38,8 @@ public class AppointmentsHelper {
                     rs.getString(11),
                     rs.getInt(12),
                     rs.getInt(13),
-                    rs.getInt(14)
+                    rs.getInt(14),
+                    AppointmentsHelper.getContact(rs.getInt(14))
                     );
             appointments.add(apt);
         }
@@ -121,14 +122,30 @@ public class AppointmentsHelper {
      * @return
      * @throws SQLException
      */
-    public static ObservableList<Integer> getAllContactID () throws SQLException {
-        ObservableList<Integer> IDs = FXCollections.observableArrayList();
-        String sql = "SELECT Contact_ID FROM contacts";
+    public static ObservableList<String> getAllContactID () throws SQLException {
+        ObservableList<String> IDs = FXCollections.observableArrayList();
+        String sql = "SELECT Contact_Name FROM contacts";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            IDs.add(rs.getInt("Contact_ID"));
+            IDs.add(rs.getString("Contact_Name"));
         }
         return IDs;
+    }
+
+    /**
+     * Returns an String of all contact in the database based on ID
+     * @return
+     * @throws SQLException
+     */
+    public static String getContact (int id) throws SQLException {
+        String sql = "SELECT Contact_Name FROM contacts WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getString("Contact_Name");
+        }
+        return "No Contact";
     }
 }
