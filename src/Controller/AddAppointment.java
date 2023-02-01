@@ -82,13 +82,26 @@ public class AddAppointment implements Initializable {
             try {
                 UserID.getItems().addAll(AppointmentsHelper.getAllUserID());
                 CustomerID.getItems().addAll(AppointmentsHelper.getAllCustID());
-                ContactID.getItems().addAll(AppointmentsHelper.getAllContactID());
+                ContactID.getItems().addAll(AppointmentsHelper.getAllContacts());
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         } else if (MainMenu.apptToModify != null) {
-            System.out.println("Need to fill in modify appointment code.");
+            AppointmentID.setText(((Integer)MainMenu.apptToModify.getAptID()).toString());
+            Title.setText(MainMenu.apptToModify.getTitle());
+            Description.setText(MainMenu.apptToModify.getDescription());
+            Type.setText(MainMenu.apptToModify.getType());
+            UserID.setValue(MainMenu.apptToModify.getUserID());
+            CustomerID.setValue(MainMenu.apptToModify.getCustomerID());
+            ContactID.setValue(MainMenu.apptToModify.getContact());
+            Location.setText(MainMenu.apptToModify.getLocation());
+            StartDate.setValue(MainMenu.apptToModify.getStart().toLocalDate());
+            EndDate.setValue(MainMenu.apptToModify.getEnd().toLocalDate());
+            StartHour.setText(((Integer)MainMenu.apptToModify.getStart().toLocalTime().getHour()).toString());
+            StartMinute.setText(((Integer)MainMenu.apptToModify.getStart().toLocalTime().getMinute()).toString());
+            EndHour.setText(((Integer)MainMenu.apptToModify.getEnd().toLocalTime().getHour()).toString());
+            EndMinute.setText(((Integer)MainMenu.apptToModify.getEnd().toLocalTime().getMinute()).toString());
         }
     }
 

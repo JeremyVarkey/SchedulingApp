@@ -118,11 +118,11 @@ public class AppointmentsHelper {
     }
 
     /**
-     * Returns an ObversableList of all contact IDs in the database
+     * Returns an ObversableList of all contact Names in the database
      * @return
      * @throws SQLException
      */
-    public static ObservableList<String> getAllContactID () throws SQLException {
+    public static ObservableList<String> getAllContacts () throws SQLException {
         ObservableList<String> IDs = FXCollections.observableArrayList();
         String sql = "SELECT Contact_Name FROM contacts";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
