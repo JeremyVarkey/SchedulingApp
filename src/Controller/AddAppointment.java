@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -72,6 +73,21 @@ public class AddAppointment implements Initializable {
 
     @FXML
     void SaveClick(ActionEvent event) {
+        String title = Title.getText();
+        String description = Description.getText();
+        String location = Location.getText();
+        String type = Type.getText();
+        int userid = UserID.getValue();
+        int custid = CustomerID.getValue();
+        String contact = ContactID.getValue();
+        LocalDate sdate = StartDate.getValue();
+        LocalDate edate = EndDate.getValue();
+        LocalTime stime = LocalTime.parse(StartHour + ":" + StartMinute);
+        LocalTime etime = LocalTime.parse(EndHour + ":" + EndMinute);
+        LocalDateTime sdatetime = LocalDateTime.of(sdate,stime);
+        LocalDateTime edatetime = LocalDateTime.of(edate, etime);
+
+
 
 
     }
