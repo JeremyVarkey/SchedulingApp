@@ -4,6 +4,7 @@ package Controller;
 import Controller.MainMenu;
 import DAO.AppointmentsHelper;
 import DAO.CustomerHelper;
+import DAO.GeneralHelper;
 import Model.Appointment;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -50,9 +51,6 @@ public class AddAppointment implements Initializable {
     Parent root;
 
 
-
-
-
     /**
      * Cancel Add Customer to go back to Main Screen.
      * @param event
@@ -70,7 +68,7 @@ public class AddAppointment implements Initializable {
 
 
     @FXML
-    void SaveClick(ActionEvent event) {
+    void SaveClick(ActionEvent event) throws Throwable {
         String title = Title.getText();
         String description = Description.getText();
         String location = Location.getText();
@@ -80,14 +78,39 @@ public class AddAppointment implements Initializable {
         String contact = ContactID.getValue();
         LocalDate sdate = StartDate.getValue();
         LocalDate edate = EndDate.getValue();
-        LocalTime stime = LocalTime.parse(StartHour.getText() + ":" + StartMinute.getText() + ":00");
-        LocalTime etime = LocalTime.parse(EndHour.getText() + ":" + EndMinute.getText() + ":00");
-        LocalDateTime sdatetime = LocalDateTime.of(sdate,stime);
-        LocalDateTime edatetime = LocalDateTime.of(edate, etime);
+        ZonedDateTime zdtLocalStart = null;
+        ZonedDateTime zdtLocalEnd = null;
 
-        //Converting start and end time to ZonedDateTime to compare against Shop opening and ending in EST
-        ZonedDateTime zdtLocalStart = sdatetime.atZone(ZoneId.systemDefault());
-        ZonedDateTime zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
+        try {
+            //converting single digits in Start Time to double digits
+            if (Integer.parseInt(StartHour.getText()) < 10) {
+                StartHour.setText("0" + Integer.parseInt(StartHour.getText()));
+            }
+            if (Integer.parseInt(StartMinute.getText()) < 10) {
+                StartMinute.setText("0" + Integer.parseInt(StartMinute.getText()));
+            }
+            LocalTime stime = LocalTime.parse(StartHour.getText() + ":" + StartMinute.getText() + ":00");
+            LocalDateTime sdatetime = LocalDateTime.of(sdate,stime);
+            zdtLocalStart = sdatetime.atZone(ZoneId.systemDefault());
+
+            //converting single digits in End Time to double digits
+            if (Integer.parseInt(EndHour.getText()) < 10) {
+                EndHour.setText("0" + Integer.parseInt(EndHour.getText()));
+            }
+            if (Integer.parseInt(EndMinute.getText()) < 10) {
+                EndMinute.setText("0" + Integer.parseInt(EndMinute.getText()));
+            }
+            LocalTime etime = LocalTime.parse(EndHour.getText() + ":" + EndMinute.getText() + ":00");
+            LocalDateTime edatetime = LocalDateTime.of(edate, etime);
+            zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
+        } catch (Exception e) {
+            GeneralHelper.createErrorMessage("Please input number in military time for start and end times!", "Time Error!");
+        }
+
+        //Checking appointment time against each other, so start is before end
+        System.out.println(zdtLocalStart.toString());
+        System.out.println(zdtLocalEnd.toString());
+
 
 
     }
