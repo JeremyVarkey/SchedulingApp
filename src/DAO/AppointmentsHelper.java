@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Helper class for Appointments table in database
@@ -147,5 +149,40 @@ public class AppointmentsHelper {
             return rs.getString("Contact_Name");
         }
         return "No Contact";
+    }
+
+    public static boolean isAppointmentOverlapEdit (LocalDateTime apptStartTime, LocalDateTime apptEndTime, int custID, int apptID) throws SQLException {
+        String sql = "SELECT Start, End FROM appointments WHERE Customer_ID = ? AND NOT Appointment_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, custID);
+        ps.setInt(2, apptID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            if ((apptStartTime.isAfter(start) && apptStartTime.isBefore(end)) ||
+                    (apptStartTime.isBefore(start) && apptEndTime.isAfter(end)) ||
+                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isAppointmentOverlapAdd (LocalDateTime apptStartTime, LocalDateTime apptEndTime, int custID) throws SQLException {
+        String sql = "SELECT Start, End FROM appointments WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, custID);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            if ((apptStartTime.isAfter(start) && apptStartTime.isBefore(end)) ||
+                    (apptStartTime.isBefore(start) && apptEndTime.isAfter(end)) ||
+                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -69,19 +69,17 @@ public class AddAppointment implements Initializable {
 
     @FXML
     void SaveClick(ActionEvent event) throws Throwable {
-        String title = Title.getText();
-        String description = Description.getText();
-        String location = Location.getText();
-        String type = Type.getText();
-        int userid = UserID.getValue();
-        int custid = CustomerID.getValue();
-        String contact = ContactID.getValue();
-        LocalDate sdate = StartDate.getValue();
-        LocalDate edate = EndDate.getValue();
-        ZonedDateTime zdtLocalStart = null;
-        ZonedDateTime zdtLocalEnd = null;
-
         try {
+            String title = Title.getText();
+            String description = Description.getText();
+            String location = Location.getText();
+            String type = Type.getText();
+            int userid = UserID.getValue();
+            int custid = CustomerID.getValue();
+            String contact = ContactID.getValue();
+            LocalDate sdate = StartDate.getValue();
+            LocalDate edate = EndDate.getValue();
+
             //converting single digits in Start Time to double digits
             if (Integer.parseInt(StartHour.getText()) < 10) {
                 StartHour.setText("0" + Integer.parseInt(StartHour.getText()));
@@ -91,7 +89,7 @@ public class AddAppointment implements Initializable {
             }
             LocalTime stime = LocalTime.parse(StartHour.getText() + ":" + StartMinute.getText() + ":00");
             LocalDateTime sdatetime = LocalDateTime.of(sdate,stime);
-            zdtLocalStart = sdatetime.atZone(ZoneId.systemDefault());
+            ZonedDateTime zdtLocalStart = sdatetime.atZone(ZoneId.systemDefault());
 
             //converting single digits in End Time to double digits
             if (Integer.parseInt(EndHour.getText()) < 10) {
@@ -102,16 +100,30 @@ public class AddAppointment implements Initializable {
             }
             LocalTime etime = LocalTime.parse(EndHour.getText() + ":" + EndMinute.getText() + ":00");
             LocalDateTime edatetime = LocalDateTime.of(edate, etime);
-            zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
+            ZonedDateTime zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
+
+            //Checking appointment time against each other, so start is before end
+            System.out.println(zdtLocalStart.toString());
+            System.out.println(zdtLocalEnd.toString());
+
+
+            //Need to fix overlap
+            if (zdtLocalStart.isAfter(zdtLocalEnd)) {
+                GeneralHelper.createErrorMessage("Start time is after End time!", "Time Error!");
+            } else if (zdtLocalStart.isBefore(ZonedDateTime.of(sdate, LocalTime.parse("08:00:00"),ZoneId.of("US/Eastern")))
+                    || zdtLocalEnd.isAfter(ZonedDateTime.of(edate, LocalTime.parse("22:00:00"),ZoneId.of("US/Eastern")))) {
+                GeneralHelper.createErrorMessage("Please schedule appointment within 8AM - 10PM EST.", "Not Within Store Hours!");
+            } else if (MainMenu.toModifyScreen && AppointmentsHelper.isAppointmentOverlapEdit(sdatetime, edatetime, custid, MainMenu.apptToModify.getAptID())) {
+                GeneralHelper.createErrorMessage("Edited Appointment overlaps with another for the same customer!", "Overlap!");
+            } else if (!MainMenu.toModifyScreen && AppointmentsHelper.isAppointmentOverlapAdd(sdatetime, edatetime, custid)) {
+                GeneralHelper.createErrorMessage("New Appointment overlaps with another for the same customer!", "Overlap!");
+            } else {
+                System.out.println("No overlaps");
+            }
+
         } catch (Exception e) {
             GeneralHelper.createErrorMessage("Please input number in military time for start and end times!", "Time Error!");
         }
-
-        //Checking appointment time against each other, so start is before end
-        System.out.println(zdtLocalStart.toString());
-        System.out.println(zdtLocalEnd.toString());
-
-
 
     }
 
