@@ -22,9 +22,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -82,12 +80,14 @@ public class AddAppointment implements Initializable {
         String contact = ContactID.getValue();
         LocalDate sdate = StartDate.getValue();
         LocalDate edate = EndDate.getValue();
-        LocalTime stime = LocalTime.parse(StartHour + ":" + StartMinute);
-        LocalTime etime = LocalTime.parse(EndHour + ":" + EndMinute);
+        LocalTime stime = LocalTime.parse(StartHour.getText() + ":" + StartMinute.getText() + ":00");
+        LocalTime etime = LocalTime.parse(EndHour.getText() + ":" + EndMinute.getText() + ":00");
         LocalDateTime sdatetime = LocalDateTime.of(sdate,stime);
         LocalDateTime edatetime = LocalDateTime.of(edate, etime);
 
-
+        //Converting start and end time to ZonedDateTime to compare against Shop opening and ending in EST
+        ZonedDateTime zdtLocalStart = sdatetime.atZone(ZoneId.systemDefault());
+        ZonedDateTime zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
 
 
     }
@@ -104,6 +104,13 @@ public class AddAppointment implements Initializable {
                 throwables.printStackTrace();
             }
         } else if (MainMenu.apptToModify != null) {
+            try {
+                UserID.getItems().addAll(AppointmentsHelper.getAllUserID());
+                CustomerID.getItems().addAll(AppointmentsHelper.getAllCustID());
+                ContactID.getItems().addAll(AppointmentsHelper.getAllContacts());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             AppointmentID.setText(((Integer)MainMenu.apptToModify.getAptID()).toString());
             Title.setText(MainMenu.apptToModify.getTitle());
             Description.setText(MainMenu.apptToModify.getDescription());
@@ -114,10 +121,14 @@ public class AddAppointment implements Initializable {
             Location.setText(MainMenu.apptToModify.getLocation());
             StartDate.setValue(MainMenu.apptToModify.getStart().toLocalDate());
             EndDate.setValue(MainMenu.apptToModify.getEnd().toLocalDate());
-            StartHour.setText(((Integer)MainMenu.apptToModify.getStart().toLocalTime().getHour()).toString());
-            StartMinute.setText(((Integer)MainMenu.apptToModify.getStart().toLocalTime().getMinute()).toString());
-            EndHour.setText(((Integer)MainMenu.apptToModify.getEnd().toLocalTime().getHour()).toString());
-            EndMinute.setText(((Integer)MainMenu.apptToModify.getEnd().toLocalTime().getMinute()).toString());
+            StartHour.setText((MainMenu.apptToModify.getStart().toLocalTime().getHour()<10?"0":"") +
+                    MainMenu.apptToModify.getStart().toLocalTime().getHour());
+            StartMinute.setText((MainMenu.apptToModify.getStart().toLocalTime().getMinute()<10?"0":"") +
+                    MainMenu.apptToModify.getStart().toLocalTime().getMinute());
+            EndHour.setText((MainMenu.apptToModify.getEnd().toLocalTime().getHour()<10?"0":"") +
+                    MainMenu.apptToModify.getEnd().toLocalTime().getHour());
+            EndMinute.setText((MainMenu.apptToModify.getEnd().toLocalTime().getMinute()<10?"0":"") +
+                    MainMenu.apptToModify.getEnd().toLocalTime().getMinute());
         }
     }
 
