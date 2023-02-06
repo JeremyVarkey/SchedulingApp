@@ -162,7 +162,8 @@ public class AppointmentsHelper {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             if ((apptStartTime.isAfter(start) && apptStartTime.isBefore(end)) ||
                     (apptStartTime.isBefore(start) && apptEndTime.isAfter(end)) ||
-                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end))) {
+                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end)) ||
+                    (apptStartTime.isEqual(start) || apptEndTime.isEqual(end))) {
                 return true;
             }
         }
@@ -179,7 +180,8 @@ public class AppointmentsHelper {
             LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
             if ((apptStartTime.isAfter(start) && apptStartTime.isBefore(end)) ||
                     (apptStartTime.isBefore(start) && apptEndTime.isAfter(end)) ||
-                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end))) {
+                    (apptEndTime.isAfter(start) && apptEndTime.isBefore(end)) ||
+                    ((apptStartTime.isEqual(start) || apptEndTime.isEqual(end)))) {
                 return true;
             }
         }

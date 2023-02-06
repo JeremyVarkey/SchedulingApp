@@ -102,16 +102,10 @@ public class AddAppointment implements Initializable {
             LocalDateTime edatetime = LocalDateTime.of(edate, etime);
             ZonedDateTime zdtLocalEnd = edatetime.atZone(ZoneId.systemDefault());
 
-            //Checking appointment time against each other, so start is before end
-            System.out.println(zdtLocalStart.toString());
-            System.out.println(zdtLocalEnd.toString());
-
-
-            //Need to fix overlap
             if (zdtLocalStart.isAfter(zdtLocalEnd)) {
                 GeneralHelper.createErrorMessage("Start time is after End time!", "Time Error!");
             } else if (zdtLocalStart.isBefore(ZonedDateTime.of(sdate, LocalTime.parse("08:00:00"),ZoneId.of("US/Eastern")))
-                    || zdtLocalEnd.isAfter(ZonedDateTime.of(edate, LocalTime.parse("22:00:00"),ZoneId.of("US/Eastern")))) {
+                    || zdtLocalEnd.isAfter(ZonedDateTime.of(sdate, LocalTime.parse("22:00:00"),ZoneId.of("US/Eastern")))) {
                 GeneralHelper.createErrorMessage("Please schedule appointment within 8AM - 10PM EST.", "Not Within Store Hours!");
             } else if (MainMenu.toModifyScreen && AppointmentsHelper.isAppointmentOverlapEdit(sdatetime, edatetime, custid, MainMenu.apptToModify.getAptID())) {
                 GeneralHelper.createErrorMessage("Edited Appointment overlaps with another for the same customer!", "Overlap!");
@@ -120,6 +114,8 @@ public class AddAppointment implements Initializable {
             } else {
                 System.out.println("No overlaps");
             }
+
+
 
         } catch (Exception e) {
             GeneralHelper.createErrorMessage("Please input number in military time for start and end times!", "Time Error!");
