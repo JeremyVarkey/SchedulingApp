@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -105,8 +107,10 @@ public class MainMenu implements Initializable {
                     "Are you sure you wish to proceed deleting this appointment?");
             Optional<ButtonType> confirm = alert.showAndWait();
             if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-                AppointmentsHelper.deleteAppointment(apptToModify.getAptID());
-                GeneralHelper.createInformMessage("Delete successful!", "Delete!");
+                int aID = apptToModify.getAptID();
+                String type = apptToModify.getType();
+                AppointmentsHelper.deleteAppointment(aID);
+                GeneralHelper.createInformMessage("Deleted Appt ID: " + aID + " of Type: " + type + " successfully!", "Delete!");
 
                 root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
                 stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
@@ -183,7 +187,7 @@ public class MainMenu implements Initializable {
             UserID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("userID"));
             StartTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
             EndTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
-
+            CalendarSelector.setValue(LocalDate.now(ZoneId.systemDefault()));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

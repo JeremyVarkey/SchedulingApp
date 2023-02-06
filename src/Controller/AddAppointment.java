@@ -112,10 +112,23 @@ public class AddAppointment implements Initializable {
             } else if (!MainMenu.toModifyScreen && AppointmentsHelper.isAppointmentOverlapAdd(sdatetime, edatetime, custid)) {
                 GeneralHelper.createErrorMessage("New Appointment overlaps with another for the same customer!", "Overlap!");
             } else {
-                System.out.println("No overlaps");
+                int conID = AppointmentsHelper.getContactID(contact);
+                if (MainMenu.toModifyScreen) {
+                    int aptid = MainMenu.apptToModify.getAptID();
+                    AppointmentsHelper.editAppointment(aptid, title, description, location, type,sdatetime, edatetime, Login.loggedUser,
+                            custid, userid, conID);
+                    GeneralHelper.createInformMessage("Appointment successfully edited!", "Success!");
+                } else {
+                    AppointmentsHelper.addAppointment(title, description, location, type, sdatetime, edatetime, Login.loggedUser, custid, userid, conID);
+                    GeneralHelper.createInformMessage("Appointment successfully added!", "Success!");
+                }
+                root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+                stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+                stage.setTitle("Main Menu");
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             }
-
-
 
         } catch (Exception e) {
             GeneralHelper.createErrorMessage("Please input number in military time for start and end times!", "Time Error!");
@@ -162,5 +175,7 @@ public class AddAppointment implements Initializable {
                     MainMenu.apptToModify.getEnd().toLocalTime().getMinute());
         }
     }
+
+
 
 }

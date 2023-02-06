@@ -5,11 +5,10 @@ import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Helper class for Appointments table in database
@@ -187,4 +186,111 @@ public class AppointmentsHelper {
         }
         return false;
     }
+
+    /**
+     * Editing existing appointments.
+     * @param aptID
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param user
+     * @param custID
+     * @param userID
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
+    public static int editAppointment (int aptID, String title, String description, String location, String type,
+                                       LocalDateTime start, LocalDateTime end, String user,
+                                       int custID, int userID, int contactID) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?," +
+                " Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?" +
+                " WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(start.format(GeneralHelper.format())));
+        ps.setTimestamp(6, Timestamp.valueOf(end.format(GeneralHelper.format())));
+        ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
+        ps.setString(8, user);
+        ps.setInt(9, custID);
+        ps.setInt(10, userID);
+        ps.setInt(11, contactID);
+        ps.setInt(12, aptID);
+        try {
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLIntegrityConstraintViolationException | IllegalStateException s) {
+            GeneralHelper.createErrorMessage("Edit appt failed!", "Error!");
+            return -1;
+        }
+    }
+
+    /**
+     * Getting contact ID (INT) from contact name (String.)
+     * @param contact
+     * @return
+     * @throws SQLException
+     */
+    public static int getContactID (String contact) throws SQLException {
+        String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, contact);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Contact_ID");
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * Adding new appointment to database.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param user
+     * @param custID
+     * @param userID
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
+    public static int addAppointment (String title, String description, String location, String type,
+                                       LocalDateTime start, LocalDateTime end, String user,
+                                       int custID, int userID, int contactID) throws SQLException {
+        String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By," +
+                " Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(start.format(GeneralHelper.format())));
+        ps.setTimestamp(6, Timestamp.valueOf(end.format(GeneralHelper.format())));
+        ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
+        ps.setString(8, user);
+        ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now(ZoneId.systemDefault()).format(GeneralHelper.format())));
+        ps.setString(10, user);
+        ps.setInt(11, custID);
+        ps.setInt(12, userID);
+        ps.setInt(13, contactID);
+
+        try {
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        } catch (SQLIntegrityConstraintViolationException | IllegalStateException s) {
+            GeneralHelper.createErrorMessage("Add appt failed!", "Error!");
+            return -1;
+        }
+    }
+
 }
