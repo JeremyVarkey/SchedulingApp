@@ -172,8 +172,13 @@ public class MainMenu implements Initializable {
      * @param event
      */
     @FXML
-    void ReportsClick(ActionEvent event) {
-
+    void ReportsClick(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
+        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        scene = new Scene(root);
+        stage.setTitle("Report");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -276,7 +281,6 @@ public class MainMenu implements Initializable {
             StartTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
             EndTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
             CalendarSelector.setValue(LocalDate.now(ZoneId.systemDefault()));
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
