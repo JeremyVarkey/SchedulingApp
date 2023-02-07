@@ -76,6 +76,88 @@ public class MainMenu implements Initializable {
     }
 
     /**
+     * Filter on all appointments within a week of the selected date.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void WeeklyViewClick(ActionEvent event) throws IOException {
+        LocalDateTime plusWeeks = CalendarSelector.getValue().atStartOfDay().plusWeeks(1);
+        LocalDateTime minusWeeks = CalendarSelector.getValue().atStartOfDay().minusWeeks(1);
+        try {
+            ObservableList<Appointment> appts = AppointmentsHelper.getAppointmentsWithinTime(minusWeeks, plusWeeks);
+            ApptTable.setItems(appts);
+            ApptID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("aptID"));
+            Title.setCellValueFactory(new PropertyValueFactory<Appointment, String>("title"));
+            Location.setCellValueFactory(new PropertyValueFactory<Appointment, String>("location"));
+            Contact.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contact"));
+            Type.setCellValueFactory(new PropertyValueFactory<Appointment, String>("type"));
+            CustID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+            UserID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("userID"));
+            StartTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
+            EndTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Filter on all appointments within a month of the selected date.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void MonthlyViewClick(ActionEvent event) throws IOException {
+        LocalDateTime plusMonths = CalendarSelector.getValue().atStartOfDay().plusMonths(1);
+        LocalDateTime minusMonths = CalendarSelector.getValue().atStartOfDay().minusMonths(1);
+        try {
+            ObservableList<Appointment> appts = AppointmentsHelper.getAppointmentsWithinTime(minusMonths, plusMonths);
+            ApptTable.setItems(appts);
+            ApptID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("aptID"));
+            Title.setCellValueFactory(new PropertyValueFactory<Appointment, String>("title"));
+            Location.setCellValueFactory(new PropertyValueFactory<Appointment, String>("location"));
+            Contact.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contact"));
+            Type.setCellValueFactory(new PropertyValueFactory<Appointment, String>("type"));
+            CustID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+            UserID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("userID"));
+            StartTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
+            EndTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Filter on all appointments.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void AllAppointmentsClick(ActionEvent event) throws IOException {
+        try {
+            ObservableList<Appointment> appts = AppointmentsHelper.getAllAppointments();
+            ApptTable.setItems(appts);
+            ApptID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("aptID"));
+            Title.setCellValueFactory(new PropertyValueFactory<Appointment, String>("title"));
+            Location.setCellValueFactory(new PropertyValueFactory<Appointment, String>("location"));
+            Contact.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contact"));
+            Type.setCellValueFactory(new PropertyValueFactory<Appointment, String>("type"));
+            CustID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+            UserID.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("userID"));
+            StartTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
+            EndTime.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
+    /**
      * Logout
      * @param event
      */
@@ -165,14 +247,20 @@ public class MainMenu implements Initializable {
     }
 
     /**
-     * Select date of appointments.
+     * Go to all appointments view when a new date is selected.
      * @param event
      */
     @FXML
-    void CalendarSelect(ActionEvent event) {
-
+    public void CalendarSelect(ActionEvent event) throws IOException {
+        AllAppointmentsClick(event);
+        AllAppointmentsButton.setSelected(true);
     }
 
+    /**
+     * Starts main menu page with prefilled all appointments in table and today's date selected.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

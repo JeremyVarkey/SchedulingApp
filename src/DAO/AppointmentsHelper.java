@@ -293,4 +293,40 @@ public class AppointmentsHelper {
         }
     }
 
+    /**
+     * Get all appointments from appointments table in database within a set LocalDateTime. Returns ObservableList of Appointment objects
+     * @return ObservableList
+     * @throws SQLException
+     */
+    public static ObservableList<Appointment> getAppointmentsWithinTime(LocalDateTime start, LocalDateTime end) throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            LocalDateTime apptStart = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime apptEnd = rs.getTimestamp("End").toLocalDateTime();
+            if (apptStart.isAfter(start) && apptStart.isBefore(end)) {
+                Appointment apt = new Appointment(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        apptStart,
+                        apptEnd,
+                        rs.getTimestamp(8).toLocalDateTime(),
+                        rs.getString(9),
+                        rs.getTimestamp(10).toLocalDateTime(),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        rs.getInt(14),
+                        AppointmentsHelper.getContact(rs.getInt(14))
+                );
+                appointments.add(apt);
+            }
+        }
+        return appointments;
+    }
+
 }

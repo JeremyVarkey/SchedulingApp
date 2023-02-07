@@ -126,5 +126,17 @@ public class LoginHelper {
         }
     }
 
+    public static int getUserID(String username) throws SQLException {
+        String sql = "SELECT User_ID FROM users WHERE User_Name = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        try {
+            rs.next();
+            return rs.getInt("User_ID");
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
 
 }

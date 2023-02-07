@@ -90,9 +90,10 @@ public class Login implements Initializable {
             LocalDateTime nowPlus15 = LocalDateTime.now().plusMinutes(15);
             LocalDateTime nowMinus15 = LocalDateTime.now().minusMinutes(15);
             for (Appointment apt:appointments) {
-                LocalDateTime aptLocalStart = GeneralHelper.UTCtoLocal(apt.getStart());
+                LocalDateTime aptLocalStart = apt.getStart();
                 if ((aptLocalStart.isBefore(nowPlus15) || aptLocalStart.isEqual(nowPlus15)) &&
-                        (aptLocalStart.isAfter(nowMinus15) || aptLocalStart.isEqual(nowMinus15))) {
+                        (aptLocalStart.isAfter(nowMinus15) || aptLocalStart.isEqual(nowMinus15)) &&
+                        (apt.getUserID() == LoginHelper.getUserID(user))) {
                     aptWithin15Min = true;
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Appointment ID #" + apt.getAptID()
                             + " is within 15 minutes, at " + apt.getStart().format(GeneralHelper.format()));

@@ -34,9 +34,9 @@
          <toggleGroup>
             <ToggleGroup fx:id="TimeFrame" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="WeeklyViewButton" layoutX="337.0" layoutY="14.0" mnemonicParsing="false" text="Weekly View" toggleGroup="$TimeFrame" />
-      <RadioButton fx:id="MonthlyViewButton" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" text="Monthly View" toggleGroup="$TimeFrame" />
-      <RadioButton fx:id="AllAppointmentsButton" layoutX="589.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="All Appointments" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="WeeklyViewButton" layoutX="337.0" layoutY="14.0" mnemonicParsing="false" onAction="#WeeklyViewClick" text="Weekly View" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="MonthlyViewButton" layoutX="452.0" layoutY="14.0" mnemonicParsing="false" onAction="#MonthlyViewClick" text="Monthly View" toggleGroup="$TimeFrame" />
+      <RadioButton fx:id="AllAppointmentsButton" layoutX="589.0" layoutY="14.0" mnemonicParsing="false" onAction="#AllAppointmentsClick" selected="true" text="All Appointments" toggleGroup="$TimeFrame" />
       <DatePicker fx:id="CalendarSelector" layoutX="582.0" layoutY="35.0" onAction="#CalendarSelect" />
    </children>
 </AnchorPane>
