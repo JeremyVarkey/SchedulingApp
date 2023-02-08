@@ -4,6 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * JDBC connection Object for use throughout program, especially in DAO files.
+ */
 public class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -16,6 +19,9 @@ public class JDBC {
     private static Connection connection = null;  // Connection Interface
     private static PreparedStatement preparedStatement;
 
+    /**
+     * Establish connection
+     */
     public static void makeConnection() {
 
         try {
@@ -30,10 +36,17 @@ public class JDBC {
         }
     }
 
+    /**
+     * Gets connection
+     * @return
+     */
     public static Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Closes connection.
+     */
     public static void closeConnection() {
         try {
             connection.close();
@@ -43,6 +56,12 @@ public class JDBC {
         }
     }
 
+    /**
+     * Prepares SQL statement
+     * @param sqlStatement
+     * @param conn
+     * @throws SQLException
+     */
     public static void makePreparedStatement(String sqlStatement, Connection conn) throws SQLException {
         if (conn != null)
             preparedStatement = conn.prepareStatement(sqlStatement);
@@ -50,6 +69,11 @@ public class JDBC {
             System.out.println("Prepared Statement Creation Failed!");
     }
 
+    /**
+     * Gets Prepared SQL statement.
+     * @return
+     * @throws SQLException
+     */
     public static PreparedStatement getPreparedStatement() throws SQLException {
         if (preparedStatement != null)
             return preparedStatement;

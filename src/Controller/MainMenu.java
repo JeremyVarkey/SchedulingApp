@@ -27,6 +27,9 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Main Menu FXML, which a user sees after logging in.
+ */
 public class MainMenu implements Initializable {
     Stage stage;
     Parent root;

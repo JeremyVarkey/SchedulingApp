@@ -16,9 +16,16 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 
-
+/**
+ * Main Method to begin application.
+ */
 public class Main extends Application {
 
+    /**
+     * Begins application with the Login FXML
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../View/login.fxml"));
@@ -29,6 +36,11 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Begin application
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
         //Locale.setDefault(new Locale("fr"));
         JDBC.makeConnection();

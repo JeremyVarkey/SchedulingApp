@@ -27,6 +27,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Add Appointment / Modify Appointment FXML
+ */
 public class AddAppointment implements Initializable {
 
     public TextField AppointmentID;
@@ -52,7 +55,7 @@ public class AddAppointment implements Initializable {
 
 
     /**
-     * Cancel Add Customer to go back to Main Screen.
+     * Cancel Add Appointment to go back to Main Screen.
      * @param event
      * @throws IOException
      */
@@ -67,6 +70,11 @@ public class AddAppointment implements Initializable {
     }
 
 
+    /**
+     * Save appointment info, adding new appointment to database or modifying existing appointment.
+     * @param event
+     * @throws Throwable
+     */
     @FXML
     void SaveClick(ActionEvent event) throws Throwable {
         try {
@@ -136,6 +144,11 @@ public class AddAppointment implements Initializable {
 
     }
 
+    /**
+     * Initialize Add / Modify Appointment Screen. Prefill info if there is an appointment to modify.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (!MainMenu.toModifyScreen) {
@@ -175,7 +188,4 @@ public class AddAppointment implements Initializable {
                     MainMenu.apptToModify.getEnd().toLocalTime().getMinute());
         }
     }
-
-
-
 }

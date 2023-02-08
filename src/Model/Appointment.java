@@ -176,6 +176,10 @@ public class Appointment {
         return contact;
     }
 
+    /**
+     * Set contact name
+     * @param contact
+     */
     public void setContact(String contact) {
         this.contact = contact;
     }

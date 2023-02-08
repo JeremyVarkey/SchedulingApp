@@ -90,7 +90,7 @@ public class AppointmentsHelper {
     }
 
     /**
-     * Returns an ObversableList of all User IDs in the database
+     * Returns an ObservableList of all User IDs in the database
      * @return
      * @throws SQLException
      */
@@ -106,7 +106,7 @@ public class AppointmentsHelper {
     }
 
     /**
-     * Returns an ObversableList of all customer IDs in the database
+     * Returns an ObservableList of all customer IDs in the database
      * @return
      * @throws SQLException
      */
@@ -122,7 +122,7 @@ public class AppointmentsHelper {
     }
 
     /**
-     * Returns an ObversableList of all contact Names in the database
+     * Returns an ObservableList of all contact Names in the database
      * @return
      * @throws SQLException
      */
@@ -153,6 +153,15 @@ public class AppointmentsHelper {
         return "No Contact";
     }
 
+    /**
+     * Checks if inputted start/end time for appointment overlaps with other appointments for the customer, excluding the appointment currently being edited.
+     * @param apptStartTime
+     * @param apptEndTime
+     * @param custID
+     * @param apptID
+     * @return
+     * @throws SQLException
+     */
     public static boolean isAppointmentOverlapEdit (LocalDateTime apptStartTime, LocalDateTime apptEndTime, int custID, int apptID) throws SQLException {
         String sql = "SELECT Start, End FROM appointments WHERE Customer_ID = ? AND NOT Appointment_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -172,6 +181,14 @@ public class AppointmentsHelper {
         return false;
     }
 
+    /**
+     * Checks if inputted start time and end time of appointment overlaps with any appointment for the customer in the DB.
+     * @param apptStartTime
+     * @param apptEndTime
+     * @param custID
+     * @return
+     * @throws SQLException
+     */
     public static boolean isAppointmentOverlapAdd (LocalDateTime apptStartTime, LocalDateTime apptEndTime, int custID) throws SQLException {
         String sql = "SELECT Start, End FROM appointments WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

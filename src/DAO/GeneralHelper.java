@@ -5,6 +5,9 @@ import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * General Helper class for use throughout Scheduling program.
+ */
 public class GeneralHelper {
 
     /**

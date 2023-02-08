@@ -13,6 +13,9 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+/**
+ * Helper class for the Customer Screens.
+ */
 public class CustomerHelper {
 
     /**
@@ -90,6 +93,17 @@ public class CustomerHelper {
         }
     }
 
+    /**
+     * Insert New Customer into Database.
+     * @param Name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param user
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
     public static int insertNewCustomer(String Name, String address, String postal, String phone, String user, int divisionID) throws SQLException{
         String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -112,6 +126,11 @@ public class CustomerHelper {
         }
     }
 
+    /**
+     * Gets all Customers from database.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList getAllCustomers() throws SQLException {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers";
@@ -132,6 +151,12 @@ public class CustomerHelper {
     }
 
 
+    /**
+     * Get Second Division name based on division ID.
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
     public static String getSecondDivisionName(int divisionID) throws SQLException {
         String sql = "SELECT Division FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -172,6 +197,18 @@ public class CustomerHelper {
         return rs.getInt("Country_ID");
     }
 
+    /**
+     * Edit customer from database based on Customer ID.
+     * @param Name
+     * @param address
+     * @param postal
+     * @param phone
+     * @param user
+     * @param divisionID
+     * @param customerID
+     * @return
+     * @throws SQLException
+     */
     public static int editCustomer(String Name, String address, String postal, String phone, String user, int divisionID, int customerID) throws SQLException {
         String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ?" +
                 " WHERE Customer_ID = ?";
@@ -194,6 +231,12 @@ public class CustomerHelper {
         }
     }
 
+    /**
+     * Deletes customer from database based on Customer ID.
+     * @param customerID
+     * @return
+     * @throws SQLException
+     */
     public static int deleteCustomerFromCustomerID(int customerID) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

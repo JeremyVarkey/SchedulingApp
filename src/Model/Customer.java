@@ -151,18 +151,34 @@ public class Customer {
         this.divisionName = divisionName;
     }
 
+    /**
+     * Get who created customer.
+     * @return
+     */
     public String getCreatedBy() {
         return createdBy;
     }
 
+    /**
+     * Set who created customer.
+     * @param createdBy
+     */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
+    /**
+     * Get when the last update was.
+     * @return
+     */
     public String getLastUpdate() {
         return lastUpdate;
     }
 
+    /**
+     * Set when the last update was.
+     * @param lastUpdate
+     */
     public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
     }

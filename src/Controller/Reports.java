@@ -24,7 +24,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +32,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Reports FXML. Implements required reports of number of Types of Appointments by Month, Schedule by Contact, and my selected report
+ * which is the number of types of appointments by second division level.
+ */
 public class Reports implements Initializable {
     public TableView<Appointment> ApptTable;
     public TableColumn<Appointment, Integer> ApptID;
@@ -60,12 +63,21 @@ public class Reports implements Initializable {
     Parent root;
     Scene scene;
 
+    /**
+     * Logout of program.
+     * @param event
+     */
     @FXML
     void LogoutClick(ActionEvent event) {
         JDBC.closeConnection();
         System.exit(0);
     }
 
+    /**
+     * Go to Main Menu.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void toMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
@@ -77,6 +89,11 @@ public class Reports implements Initializable {
     }
 
 
+    /**
+     * Select contact to see scheduling for.
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void selectContact(ActionEvent event) throws SQLException {
         String contact = Contacts.getValue();
@@ -95,6 +112,11 @@ public class Reports implements Initializable {
     }
 
 
+    /**
+     * Initialize screen. Automatically fills in Appt Type and Appt Locations report.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

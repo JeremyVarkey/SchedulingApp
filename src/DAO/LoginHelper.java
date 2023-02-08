@@ -126,6 +126,12 @@ public class LoginHelper {
         }
     }
 
+    /**
+     * Get user ID based on the User String.
+     * @param username
+     * @return
+     * @throws SQLException
+     */
     public static int getUserID(String username) throws SQLException {
         String sql = "SELECT User_ID FROM users WHERE User_Name = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

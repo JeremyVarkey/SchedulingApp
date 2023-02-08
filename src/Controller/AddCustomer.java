@@ -22,6 +22,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the add / modify customer FXML.
+ */
 public class AddCustomer implements Initializable {
 
     Stage stage;
@@ -38,6 +41,11 @@ public class AddCustomer implements Initializable {
     @FXML private Button Save;
     @FXML private ChoiceBox<String> StateSelection;
 
+    /**
+     * Cancel adding / modifying customer.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void CancelButtonClick(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/View/CustomerMenu.fxml"));
@@ -86,7 +94,7 @@ public class AddCustomer implements Initializable {
 
     /**
      * Initialize method. Sets choicebox values based on user input. Prepopulates the Customer Info if a customer has been selected.
-     * Contains Lambda for Listener on Country Selection
+     * Contains Lambda for Listener on Country Selection Line 106 and Line 144
      * @param url
      * @param resourceBundle
      */
@@ -96,7 +104,7 @@ public class AddCustomer implements Initializable {
             try {
                 CountrySelection.getItems().addAll(CustomerHelper.getCountries());
                 /**
-                 * Lambda to set the State depending on the Country property
+                 * Lambda to set the State depending on the Country property.
                  */
                 CountrySelection.valueProperty().addListener((obs, oldValue, newvalue) -> {
                     if (newvalue == null) {
