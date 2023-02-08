@@ -159,17 +159,6 @@ public class MainMenu implements Initializable {
         }
     }
 
-
-    /**
-     * Logout
-     * @param event
-     */
-    @FXML
-    void LogoutClick(ActionEvent event) {
-        JDBC.closeConnection();
-        System.exit(0);
-    }
-
     /**
      * Go to selected Reports
      * @param event
@@ -266,11 +255,15 @@ public class MainMenu implements Initializable {
 
     /**
      * Starts main menu page with prefilled all appointments in table and today's date selected.
+     * Initialize contains Lambda expression, setting the Logout Buttons logout functionality
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Logout.setOnAction(e -> {JDBC.closeConnection();
+            System.exit(0);});
+
         try {
             ObservableList<Appointment> appts = AppointmentsHelper.getAllAppointments();
             ApptTable.setItems(appts);

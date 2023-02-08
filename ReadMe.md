@@ -24,8 +24,8 @@
 <br/> As an example, if the organization sees that we have a high concentration of Customer Intake appointments in the UK, we should align Sales Headcount resources to that location.
 
 <b>Lambdas</b>
-<br/> Lambda 1:
-<br/> Lambda 2:
+<br/> Lambda 1: Located in Controller.AddCustomer. Initialize Function Line 144. The purpose of the lambda is to add a Listener on the Country Selection ComboBox to change the contents of the Second Division list, initially being set as empty when a new Country is selected.
+<br/> Lambda 2: Located in Controller.MainMenu. Initialize Function line 263. The purpose of the lambda is to add the Logout button's functionality upon initialize, making it easier for the user to close the program.
 
 <b>MySQL</b>
 <br/> mysql-connector-java-8.0.25
