@@ -2,11 +2,13 @@ package Model;
 
 public class Countries {
     private String country;
+    private String division;
     private String type;
     private int numberOfAppts;
 
-    public Countries (String country, String type, int numberOfAppts) {
+    public Countries (String country, String division, String type, int numberOfAppts) {
         this.country = country;
+        this.division = division;
         this.type = type;
         this.numberOfAppts = numberOfAppts;
     }
@@ -33,5 +35,13 @@ public class Countries {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 }

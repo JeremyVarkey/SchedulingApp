@@ -32,7 +32,13 @@
             <TableColumn fx:id="ApptID12" prefWidth="150.0" text="Number of Appointments" />
          </columns></TableView>
       <Text layoutX="14.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appts by Type and Month" />
-      <Text layoutX="20.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appts by Country and Type" />
-      <TableView fx:id="CountryTable" layoutX="173.0" layoutY="345.0" prefHeight="100.0" prefWidth="593.0" />
+      <Text layoutX="10.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appts by Location and Type" />
+      <TableView fx:id="CountryTable" layoutX="173.0" layoutY="345.0" prefHeight="100.0" prefWidth="593.0">
+         <columns>
+            <TableColumn fx:id="Country" prefWidth="168.0" text="Country" />
+            <TableColumn fx:id="Division" prefWidth="157.0" text="Division" />
+            <TableColumn fx:id="CountryType" prefWidth="124.0" text="Type" />
+            <TableColumn fx:id="CountryAppts" prefWidth="143.0" text="Number of Appts" />
+         </columns></TableView>
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.Countries;
 import Model.JDBC;
 import Model.Appointment;
 import Model.Types;
@@ -379,6 +380,28 @@ public class AppointmentsHelper {
             appointments.add(apt);
         }
         return appointments;
+    }
+
+    /**
+     * Get Types by First Division
+     * @return ObservableList
+     * @throws SQLException
+     */
+    public static ObservableList<Countries> getTypebyCountry() throws SQLException {
+        ObservableList<Countries> allTypes = FXCollections.observableArrayList();
+        String sql = "SELECT countries.Country, first_level_divisions.Division, appointments.Type ,COUNT(countries.Country) AS \"Number of Appointments\" " +
+                "FROM appointments " +
+                "JOIN customers ON appointments.Customer_ID = customers.Customer_ID " +
+                "JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID " +
+                "JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID " +
+                "GROUP BY Country, Division, Type;";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Countries c = new Countries(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+            allTypes.add(c);
+        }
+        return  allTypes;
     }
 
 }

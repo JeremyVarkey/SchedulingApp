@@ -2,11 +2,13 @@ package Controller;
 
 import DAO.AppointmentsHelper;
 import Model.Appointment;
+import Model.Countries;
 import Model.JDBC;
 import Model.Types;
 import com.mysql.cj.result.ValueFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,11 +45,15 @@ public class Reports implements Initializable {
     public Button MainMenu;
     public Button Logout;
     public TableView<Types> TypeTable;
-    public TableView CountryTable;
+    public TableView<Countries> CountryTable;
     public ComboBox<String> Contacts;
     public TableColumn<Types, String> ApptID1;
     public TableColumn<Types, String> ApptID11;
     public TableColumn<Types, Integer> ApptID12;
+    public TableColumn<Countries, String> Country;
+    public TableColumn<Countries, String> Division;
+    public TableColumn<Countries, String > CountryType;
+    public TableColumn<Countries, Integer> CountryAppts;
 
 
     Stage stage;
@@ -100,11 +106,15 @@ public class Reports implements Initializable {
             ApptID11.setCellValueFactory(new PropertyValueFactory<Types, String>("month"));
             ApptID12.setCellValueFactory(new PropertyValueFactory<Types, Integer>("numberOfAppts"));
 
+            ObservableList<Countries> countries = AppointmentsHelper.getTypebyCountry();
+            CountryTable.setItems(countries);
+            Country.setCellValueFactory(new PropertyValueFactory<Countries, String>("country"));
+            Division.setCellValueFactory(new PropertyValueFactory<Countries, String>("division"));
+            CountryType.setCellValueFactory(new PropertyValueFactory<Countries, String>("type"));
+            CountryAppts.setCellValueFactory(new PropertyValueFactory<Countries, Integer>("numberOfAppts"));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 }
