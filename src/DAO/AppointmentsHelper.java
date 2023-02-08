@@ -2,9 +2,11 @@ package DAO;
 
 import Model.JDBC;
 import Model.Appointment;
+import Model.Types;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -331,14 +333,19 @@ public class AppointmentsHelper {
 
     /**
      * Get all appointments from appointments table in database by Type and Month
-     * @return ResultSet
+     * @return ObservableList
      * @throws SQLException
      */
-    public static ResultSet getTypebyMonth() throws SQLException {
-        String sql = "SELECT Type, Month(Start), COUNT(Type) FROM appointments GROUP BY Type, Month(Start);";
+    public static ObservableList<Types> getTypebyMonth() throws SQLException {
+        ObservableList<Types> allTypes = FXCollections.observableArrayList();
+        String sql = "SELECT Type, Month(Start) AS \"Month\", COUNT(Type) AS \"Count\" FROM appointments GROUP BY Type, Month(Start);";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        return rs;
+        while (rs.next()) {
+            Types type = new Types(rs.getString("Type"), rs.getInt("Month"), rs.getInt("Count"));
+            allTypes.add(type);
+        }
+        return  allTypes;
     }
 
     /**

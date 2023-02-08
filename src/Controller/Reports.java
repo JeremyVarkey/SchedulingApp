@@ -3,6 +3,7 @@ package Controller;
 import DAO.AppointmentsHelper;
 import Model.Appointment;
 import Model.JDBC;
+import Model.Types;
 import com.mysql.cj.result.ValueFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -41,9 +42,12 @@ public class Reports implements Initializable {
     public TableColumn<Appointment, Integer> CustID;
     public Button MainMenu;
     public Button Logout;
-    public TableView TypeTable;
+    public TableView<Types> TypeTable;
     public TableView CountryTable;
     public ComboBox<String> Contacts;
+    public TableColumn<Types, String> ApptID1;
+    public TableColumn<Types, String> ApptID11;
+    public TableColumn<Types, Integer> ApptID12;
 
 
     Stage stage;
@@ -89,6 +93,13 @@ public class Reports implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             Contacts.setItems(AppointmentsHelper.getAllContacts());
+
+            ObservableList<Types> allTypes = AppointmentsHelper.getTypebyMonth();
+            TypeTable.setItems(allTypes);
+            ApptID1.setCellValueFactory(new PropertyValueFactory<Types, String>("type"));
+            ApptID11.setCellValueFactory(new PropertyValueFactory<Types, String>("month"));
+            ApptID12.setCellValueFactory(new PropertyValueFactory<Types, Integer>("numberOfAppts"));
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
